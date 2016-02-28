@@ -14,7 +14,7 @@ void brain::run() {
 
         events_.pop();
 
-        std::cout << "executed event at " << now << ". remaining size: " << events_.size() << std::endl;
+        perf_();
     }
 }
 

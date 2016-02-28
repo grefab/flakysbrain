@@ -11,6 +11,7 @@
 #include <c++/deque>
 #include "neuron.h"
 #include "event.h"
+#include "performance_measure.h"
 
 struct brain {
     // Runs until no events are in the queue anymore.
@@ -37,6 +38,7 @@ private:
     };
     std::priority_queue<event, std::deque<event>, decltype(compare)> events_{compare};
 
+    performance_measure perf_;
 };
 
 #endif //FLAKYSBRAIN_BRAIN_H
