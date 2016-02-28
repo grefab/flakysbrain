@@ -7,7 +7,7 @@
 
 void brain::run() {
     while (!events_.empty()) {
-        auto e = events_.top();
+        auto& e = events_.top();
 
         timestamp now = e.when_;
         e.target_->apply_pulse(e.pulse_, now, this);
@@ -18,7 +18,7 @@ void brain::run() {
     }
 }
 
-void brain::add_event(event const& e) {
+void brain::add_event(event&& e) {
     events_.push(e);
 }
 

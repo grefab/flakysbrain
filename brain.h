@@ -19,7 +19,7 @@ public:
     void run();
 
     // Is called by neuron. Adds an event to the event queue.
-    void add_event(event const& e);
+    void add_event(event&& e);
 
     // Fiddle with neurons.
     neuron_ptr add_neuron(neuron_ptr n);

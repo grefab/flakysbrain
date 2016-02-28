@@ -26,7 +26,7 @@ void neuron::fire(timestamp now, brain* b) {
         e.pulse_ = power_ * c->weight_;
         e.when_ = now + c->distance_;
         e.target_ = c->target_;
-        b->add_event(e);
+        b->add_event(std::move(e));
     }
 
     last_fired_timestamp_ = now;
