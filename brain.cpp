@@ -6,7 +6,7 @@
 #include "brain.h"
 
 void brain::run() {
-    while (events_.size() > 0) {
+    while (!events_.empty()) {
         auto e = events_.top();
 
         timestamp now = e.when_;

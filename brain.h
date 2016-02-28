@@ -13,7 +13,8 @@
 #include "event.h"
 #include "performance_measure.h"
 
-struct brain {
+class brain {
+public:
     // Runs until no events are in the queue anymore.
     void run();
 
