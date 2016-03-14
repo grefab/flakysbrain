@@ -40,6 +40,7 @@ private:
     std::priority_queue<event, std::deque<event>, decltype(compare)> events_{compare};
 
     performance_measure perf_;
+
 };
 
 #endif //FLAKYSBRAIN_BRAIN_H
