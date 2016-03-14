@@ -17,7 +17,7 @@ void performance_measure::operator()() {
         std::cout << "executed " << counter_ << " events in " << duration << "ms, "
         << events_per_second << "e/s" << std::endl;
 
-        // Make sure we do not log too frequent.
+        // Make sure we do not log too frequently.
         if (duration < 1000) {
             batch_size_ *= 2;
         } else if (duration > 5000) {
