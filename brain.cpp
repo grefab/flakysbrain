@@ -28,7 +28,22 @@ neuron_ptr brain::add_neuron(neuron_ptr n) {
 }
 
 void brain::remove_neuron(neuron_ptr n) {
+    // Remove all connections from this neuron, so that if it is still part of
+    // the event queue, it does not fire anywhere upon event execution.
+    n->connections_.clear();
+
     neurons_.erase(n);
+
+    // Remove all connections to the to-be-deleted neuron.
+    for (auto& neuron : neurons_) {
+        for (auto c_it = neuron->connections_.begin(); c_it != neuron->connections_.end();) {
+            if ((*c_it)->target_ == n) {
+                neuron->connections_.erase(c_it++);
+            } else {
+                ++c_it;
+            }
+        }
+    }
 }
 
 void brain::add_connection(neuron_ptr n, connection_ptr c) {
