@@ -5,10 +5,10 @@
 #ifndef FLAKYSBRAIN_BRAIN_H
 #define FLAKYSBRAIN_BRAIN_H
 
-#include <c++/unordered_set>
-#include <c++/functional>
-#include <c++/queue>
-#include <c++/deque>
+#include <unordered_set>
+#include <functional>
+#include <queue>
+#include <deque>
 #include "neuron.h"
 #include "event.h"
 #include "performance_measure.h"

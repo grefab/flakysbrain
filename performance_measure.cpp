@@ -3,7 +3,7 @@
 //
 
 #include "performance_measure.h"
-#include <c++/iostream>
+#include <iostream>
 
 void performance_measure::operator()() {
     if (++counter_ >= batch_size_) {

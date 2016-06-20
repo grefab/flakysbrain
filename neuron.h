@@ -5,10 +5,10 @@
 #ifndef FLAKYSBRAIN_NEURON_H
 #define FLAKYSBRAIN_NEURON_H
 
-#include <c++/memory>
-#include <c++/set>
-#include <c++/limits>
-#include <c++/functional>
+#include <memory>
+#include <set>
+#include <limits>
+#include <functional>
 #include "types.h"
 
 struct brain;

@@ -5,8 +5,8 @@
 #ifndef FLAKYSBRAIN_PERFORMANCE_MEASURE_H
 #define FLAKYSBRAIN_PERFORMANCE_MEASURE_H
 
-#include <c++/cstdint>
-#include <c++/chrono>
+#include <cstdint>
+#include <chrono>
 
 class performance_measure {
 public:
