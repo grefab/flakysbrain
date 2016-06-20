@@ -3,5 +3,11 @@ project(flakysbrain)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES src/main.cpp src/neuron.cpp src/neuron.h src/brain.cpp src/brain.h src/types.h src/event.cpp src/event.h src/performance_measure.cpp src/performance_measure.h)
-add_executable(flakysbrain ${SOURCE_FILES})
+add_library(Catch INTERFACE)
+target_include_directories(Catch INTERFACE _test/catch)
+
+set(SOURCE_FILES src/neuron.cpp src/neuron.h src/brain.cpp src/brain.h src/types.h src/event.cpp src/event.h src/performance_measure.cpp src/performance_measure.h)
+add_executable(flakysbrain src/main.cpp ${SOURCE_FILES})
+
+add_executable(flakysbrain_test src/_test/main_test.cpp ${SOURCE_FILES} src/_test/brain_test.cpp)
+target_link_libraries(flakysbrain_test Catch)

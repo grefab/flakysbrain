@@ -28,6 +28,8 @@ public:
     void add_connection(neuron_ptr n, connection_ptr c);
     void remove_connection(neuron_ptr n, connection_ptr c);
 
+    std::unordered_set<neuron_ptr> const& neurons() { return neurons_; }
+
 private:
     // Contains all neurons in this brain. Mainly used for bookkeeping.
     std::unordered_set<neuron_ptr> neurons_;
