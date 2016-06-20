@@ -3,7 +3,7 @@
 //
 
 #include "catch/catch.hpp"
-#include "../brain.h"
+#include "../src/brain.h"
 
 TEST_CASE("brain modifications", "[brain]") {
     brain b;
