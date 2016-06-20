@@ -29,6 +29,7 @@ public:
     void remove_connection(neuron_ptr n, connection_ptr c);
 
     std::unordered_set<neuron_ptr> const& neurons() { return neurons_; }
+    size_t events_in_queue() const { return events_.size(); }
 
 private:
     // Contains all neurons in this brain. Mainly used for bookkeeping.
