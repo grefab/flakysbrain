@@ -6,16 +6,16 @@
 #include "brain.h"
 
 void brain::run() {
+    add_event({100, [this](timestamp now) {
+        maintenance(now);
+    }});
+
     while (!events_.empty()) {
         auto& e = events_.top();
 
         timestamp now = e.when_;
         e.action(now);
         events_.pop();
-
-        if (e.when_ > 100) {
-            maintenance(now);
-        }
 
         perf_();
     }
@@ -71,4 +71,8 @@ void brain::maintenance(timestamp now) {
         events_.pop();
     }
     events_ = new_events;
+
+    add_event({100, [this](timestamp now) {
+        maintenance(now);
+    }});
 }
