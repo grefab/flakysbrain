@@ -4,8 +4,7 @@
 #include "neuron.h"
 
 struct event {
-    neuron_ptr target_;
     timestamp when_;
-    pulse pulse_;
+    std::function<void(timestamp now)> action;
 
 };

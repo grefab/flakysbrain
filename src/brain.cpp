@@ -10,8 +10,7 @@ void brain::run() {
         auto& e = events_.top();
 
         timestamp now = e.when_;
-        e.target_->apply_pulse(e.pulse_, now, this);
-
+        e.action(now);
         events_.pop();
 
         if (e.when_ > 100) {
