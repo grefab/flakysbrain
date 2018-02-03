@@ -8,7 +8,7 @@
 void performance_measure::operator()() {
     if (++counter_ >= batch_size_) {
         // Time calculations
-        auto current_real_time = std::chrono::_V2::steady_clock::now();
+        auto current_real_time = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(current_real_time - last_real_time_)
                 .count();
         auto events_per_second = duration > 0 ? counter_ * 1000 / duration : 0;

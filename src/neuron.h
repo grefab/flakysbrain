@@ -1,9 +1,4 @@
-//
-// Created by Gregor on 27.02.2016.
-//
-
-#ifndef FLAKYSBRAIN_NEURON_H
-#define FLAKYSBRAIN_NEURON_H
+#pragma  once
 
 #include <memory>
 #include <set>
@@ -11,7 +6,7 @@
 #include <functional>
 #include "types.h"
 
-struct brain;
+class brain;
 struct connection;
 using connection_ptr = std::shared_ptr<connection>;
 
@@ -81,5 +76,3 @@ struct connection {
     double weight_;
 
 };
-
-#endif //FLAKYSBRAIN_NEURON_H

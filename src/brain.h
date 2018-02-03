@@ -1,9 +1,4 @@
-//
-// Created by Gregor on 27.02.2016.
-//
-
-#ifndef FLAKYSBRAIN_BRAIN_H
-#define FLAKYSBRAIN_BRAIN_H
+#pragma  once
 
 #include <unordered_set>
 #include <functional>
@@ -45,5 +40,3 @@ private:
     performance_measure perf_;
 
 };
-
-#endif //FLAKYSBRAIN_BRAIN_H

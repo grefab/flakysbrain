@@ -1,9 +1,4 @@
-//
-// Created by Gregor on 27.02.2016.
-//
-
-#ifndef FLAKYSBRAIN_EVENT_H
-#define FLAKYSBRAIN_EVENT_H
+#pragma  once
 
 #include "types.h"
 #include "neuron.h"
@@ -14,5 +9,3 @@ struct event {
     pulse pulse_;
 
 };
-
-#endif //FLAKYSBRAIN_EVENT_H

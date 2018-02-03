@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 project(flakysbrain)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_STANDARD 14)
 
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE test/catch)
