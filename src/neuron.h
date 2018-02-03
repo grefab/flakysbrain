@@ -11,6 +11,8 @@ struct connection;
 using connection_ptr = std::shared_ptr<connection>;
 
 struct neuron {
+    friend class brain;
+
     // Constructor
     neuron(pulse power,
            double bias,

@@ -14,6 +14,10 @@ void brain::run() {
 
         events_.pop();
 
+        if (e.when_ > 100) {
+            maintenance(now);
+        }
+
         perf_();
     }
 }
@@ -52,4 +56,20 @@ void brain::add_connection(neuron_ptr n, connection_ptr c) {
 
 void brain::remove_connection(neuron_ptr n, connection_ptr c) {
     n->connections_.erase(c);
+}
+
+void brain::maintenance(timestamp now) {
+    for (auto& neuron : neurons_) {
+        neuron->last_pulse_received_timestamp_ -= now;
+        neuron->last_fired_timestamp_ -= now;
+    }
+
+    std::priority_queue<event, std::deque<event>, decltype(compare)> new_events{compare};
+    while (!events_.empty()) {
+        auto new_event = events_.top();
+        new_event.when_ -= now;
+        new_events.push(new_event);
+        events_.pop();
+    }
+    events_ = new_events;
 }
