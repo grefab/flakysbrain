@@ -12,7 +12,7 @@ int main() {
         // Grey matter
         auto n = b.add_neuron(std::make_shared<neuron>(1, 0.5));
         b.add_connection(eye, std::make_shared<connection>(n, 1, 1));
-        for(int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 100; ++i) {
             auto n2 = b.add_neuron(std::make_shared<neuron>(1, 0.5));
             b.add_connection(n, std::make_shared<connection>(n2, 1, 1));
             n = n2;
