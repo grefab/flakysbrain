@@ -47,11 +47,11 @@ private:
 
     // Modifies potential depending on time passed since last pulse receive event.
     // Potential shall decay over time until it reaches 0.
-    double decay(duration time_passed, double last_potential) const;
+    double decayed(duration time_passed, double last_potential) const;
 
     // Modifies pulse depending on time passed since last time fired.
     // Pulse shall be weakened if last event has happened recently.
-    double cool_down(duration time_passed, pulse p) const;
+    double cooled_down(duration time_passed, pulse p) const;
 
 private:
     // Internal state
