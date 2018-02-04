@@ -6,22 +6,20 @@
 #include "brain.h"
 
 void brain::run() {
-    add_event({100, [this](timestamp now) {
-        maintenance(now);
-    }});
+    add_event(std::make_shared<maintenance_event>(100));
 
     while (!events_.empty()) {
         auto& e = events_.top();
 
-        timestamp now = e.when_;
-        e.action(now);
+        timestamp now = e->when_;
+        e->action(this, now);
         events_.pop();
 
         perf_();
     }
 }
 
-void brain::add_event(event&& e) {
+void brain::add_event(event::ptr e) {
     events_.push(e);
 }
 
@@ -63,16 +61,14 @@ void brain::maintenance(timestamp now) {
         neuron->last_fired_timestamp_ -= now;
     }
 
-    std::priority_queue<event, std::deque<event>, decltype(compare)> new_events{compare};
+    std::priority_queue<event::ptr, std::deque<event::ptr>, decltype(compare)> new_events{compare};
     while (!events_.empty()) {
         auto new_event = events_.top();
-        new_event.when_ -= now;
+        new_event->when_ -= now;
         new_events.push(new_event);
         events_.pop();
     }
     events_ = new_events;
 
-    add_event({100, [this](timestamp now) {
-        maintenance(now);
-    }});
+    add_event(std::make_shared<maintenance_event>(100));
 }

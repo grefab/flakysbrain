@@ -22,16 +22,7 @@ void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
 void neuron::fire(timestamp now, brain* b) {
     // Add events in the future for all our connections.
     for (auto const& c : connections_) {
-        auto pulse = power_ * c->weight_;
-        auto target = c->target_;
-
-        event e;
-        e.when_ = now + c->distance_;
-        e.action = [target, pulse, b](timestamp now) {
-            target->apply_pulse(pulse, now, b);
-        };
-
-        b->add_event(std::move(e));
+        b->add_event(std::make_shared<neuronal_event>(now + c->distance_, c->target_, power_ * c->weight_));
     }
 
     last_fired_timestamp_ = now;

@@ -15,7 +15,7 @@ void performance_measure::operator()() {
 
         // Log output
         std::cout << "executed " << counter_ << " events in " << duration << "ms, "
-        << events_per_second << "e/s" << std::endl;
+                  << events_per_second << "e/s" << std::endl;
 
         // Make sure we do not log too frequently.
         if (duration < 1000) {
