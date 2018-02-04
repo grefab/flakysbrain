@@ -32,3 +32,14 @@ struct maintenance_event : public event {
     void action(brain* b, timestamp now) override;
 
 };
+
+struct periodic_event : public event {
+     periodic_event(timestamp when, duration period, std::function<void(brain* b, timestamp now)> f);
+
+    void action(brain* b, timestamp now) override;
+
+private:
+    duration period_;
+    std::function<void(brain* b, timestamp now)> f_;
+
+};
