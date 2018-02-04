@@ -32,7 +32,7 @@ struct neuron {
 
     /* The following parameters shall be modified during learning. */
 
-    // Amount of firing power in [-1, 1]
+    // Amount of firing power in [0, 1]
     pulse power_;
 
     // If potential exceeds bias, we fire. In (0, inf)
@@ -74,7 +74,7 @@ struct connection {
     // The timely distance to the target, shall be positive.
     duration distance_;
 
-    // Is multiplied to a outgoing pulse, shall be in [0, 1].
+    // Is multiplied to a outgoing pulse, shall be in [-1, 1].
     double weight_;
 
 };
