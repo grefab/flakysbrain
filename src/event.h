@@ -4,7 +4,6 @@
 #include "neuron.h"
 
 struct event {
-    using ptr = std::shared_ptr<event>;
 
     explicit event(timestamp when);
 
@@ -13,6 +12,8 @@ struct event {
     timestamp when_;
 
 };
+
+using event_ptr = std::shared_ptr<event>;
 
 struct neuronal_event : public event {
     neuronal_event(timestamp when, neuron_ptr target, pulse pulse);

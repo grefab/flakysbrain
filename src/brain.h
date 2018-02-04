@@ -16,7 +16,7 @@ public:
     void run();
 
     // Is called by neuron. Adds an event to the event queue.
-    void add_event(event::ptr e);
+    void add_event(event_ptr e);
 
     // Fiddle with neurons.
     neuron_ptr add_neuron(neuron_ptr n);
@@ -39,10 +39,10 @@ private:
 
     // A priority queue that places small timestamps first. Therefore we can easily
     // access the next event that shall happen.
-    std::function<bool(event::ptr const&, event::ptr const&)> compare = [](event::ptr const& a, event::ptr const& b) {
+    std::function<bool(event_ptr const&, event_ptr const&)> compare = [](event_ptr const& a, event_ptr const& b) {
         return a->when_ > b->when_;
     };
-    std::priority_queue<event::ptr, std::deque<event::ptr>, decltype(compare)> events_{compare};
+    std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> events_{compare};
 
     performance_measure perf_;
 

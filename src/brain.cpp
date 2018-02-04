@@ -19,7 +19,7 @@ void brain::run() {
     }
 }
 
-void brain::add_event(event::ptr e) {
+void brain::add_event(event_ptr e) {
     events_.push(e);
 }
 
@@ -61,7 +61,7 @@ void brain::maintenance(timestamp now) {
         neuron->last_fired_timestamp_ -= now;
     }
 
-    std::priority_queue<event::ptr, std::deque<event::ptr>, decltype(compare)> new_events{compare};
+    std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> new_events{compare};
     while (!events_.empty()) {
         auto new_event = events_.top();
         new_event->when_ -= now;
