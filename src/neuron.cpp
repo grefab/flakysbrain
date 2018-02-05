@@ -20,6 +20,10 @@ void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
 }
 
 void neuron::fire(timestamp now, brain* b) {
+    if (on_fire_) {
+        (*on_fire_)(now, power_);
+    }
+
     // Add events in the future for all our connections.
     for (auto const& c : connections_) {
         b->add_event(std::make_shared<neuronal_event>(now + c->distance_, c->target_, power_ * c->weight_));
