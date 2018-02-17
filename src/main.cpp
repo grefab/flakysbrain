@@ -22,7 +22,7 @@ int main() {
         auto motor = b.add_neuron(std::make_shared<neuron>(1, 0.5));
         b.add_connection(n, std::make_shared<connection>(motor, 1, 1));
         motor->on_fire_ = [](timestamp now, pulse power) {
-            std::cout << now << "motor activated: " << power << std::endl;
+///            std::cout << now << "motor activated: " << power << std::endl;
         };
 
         b.add_event(std::make_shared<periodic_event>(0, 100, [&eye](brain* b, timestamp now) {

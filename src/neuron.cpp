@@ -20,9 +20,7 @@ void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
 }
 
 void neuron::fire(timestamp now, brain* b) {
-    if (on_fire_) {
-        (*on_fire_)(now, power_);
-    }
+    on_fire_(now, power_);
 
     // Add events in the future for all our connections.
     for (auto const& c : connections_) {

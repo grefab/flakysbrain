@@ -4,7 +4,6 @@
 #include <set>
 #include <limits>
 #include <functional>
-#include <optional>
 #include "types.h"
 
 class brain;
@@ -43,7 +42,7 @@ struct neuron {
     std::set<connection_ptr> connections_;
 
     // Monitoring
-    std::optional<std::function<void(timestamp now, pulse power)>> on_fire_;
+    std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp now, pulse power){};
 
 private:
     // Fires a pulse along the connections.
