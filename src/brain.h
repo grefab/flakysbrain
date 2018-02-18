@@ -1,11 +1,11 @@
-#pragma  once
+#pragma once
 
-#include <unordered_set>
+#include <deque>
 #include <functional>
 #include <queue>
-#include <deque>
-#include "neuron.h"
+#include <unordered_set>
 #include "event.h"
+#include "neuron.h"
 #include "performance_measure.h"
 
 class brain {
@@ -45,5 +45,4 @@ private:
     std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> events_{compare};
 
     performance_measure perf_;
-
 };

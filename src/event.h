@@ -1,16 +1,14 @@
-#pragma  once
+#pragma once
 
-#include "types.h"
 #include "neuron.h"
+#include "types.h"
 
 struct event {
-
     explicit event(timestamp when);
 
     virtual void action(brain* b, timestamp now) = 0;
 
     timestamp when_;
-
 };
 
 using event_ptr = std::shared_ptr<event>;
@@ -23,14 +21,12 @@ struct neuronal_event : public event {
 private:
     neuron_ptr target_;
     pulse pulse_;
-
 };
 
 struct maintenance_event : public event {
     explicit maintenance_event(timestamp when);
 
     void action(brain* b, timestamp now) override;
-
 };
 
 struct periodic_event : public event {
@@ -41,5 +37,4 @@ struct periodic_event : public event {
 private:
     duration period_;
     std::function<void(brain* b, timestamp now)> f_;
-
 };

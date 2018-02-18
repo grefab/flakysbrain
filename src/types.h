@@ -1,4 +1,4 @@
-#pragma  once
+#pragma once
 
 using timestamp = double;
 using duration = double;

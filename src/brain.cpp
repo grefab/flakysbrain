@@ -1,9 +1,5 @@
-//
-// Created by Gregor on 27.02.2016.
-//
-
-#include <iostream>
 #include "brain.h"
+#include <iostream>
 
 void brain::run() {
     add_event(std::make_shared<maintenance_event>(100));

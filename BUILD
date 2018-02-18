@@ -3,5 +3,5 @@ package(default_visibility = ["//visibility:public"])
 cc_binary(
     name = "flakysbrain",
     srcs = glob(["src/**"]),
-    copts = ["-std=c++17"],
+    copts = ["-std=c++17 -O2"],
 )

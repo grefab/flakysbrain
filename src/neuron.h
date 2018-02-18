@@ -1,12 +1,14 @@
-#pragma  once
+#pragma once
 
+#include <functional>
+#include <limits>
 #include <memory>
 #include <set>
-#include <limits>
-#include <functional>
+#include <utility>
 #include "types.h"
 
 class brain;
+
 struct connection;
 using connection_ptr = std::shared_ptr<connection>;
 
@@ -19,13 +21,13 @@ struct neuron {
            std::set<connection_ptr> connections = std::set<connection_ptr>(),
            double potential = 0,
            timestamp last_pulse_received_timestamp = std::numeric_limits<timestamp>::max(),
-           timestamp last_fired_timestamp = std::numeric_limits<timestamp>::max()) :
-            power_(power),
-            bias_(bias),
-            connections_(connections),
-            potential_(potential),
-            last_pulse_received_timestamp_(last_pulse_received_timestamp),
-            last_fired_timestamp_(last_fired_timestamp) { }
+           timestamp last_fired_timestamp = std::numeric_limits<timestamp>::max())
+        : power_(power),
+          bias_(bias),
+          connections_(std::move(connections)),
+          potential_(potential),
+          last_pulse_received_timestamp_(last_pulse_received_timestamp),
+          last_fired_timestamp_(last_fired_timestamp) {}
 
     // Is called by brain when an event reaches this neuron.
     void apply_pulse(pulse p, timestamp now, brain* b);
@@ -42,7 +44,7 @@ struct neuron {
     std::set<connection_ptr> connections_;
 
     // Monitoring
-    std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp now, pulse power){};
+    std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp now, pulse power) {};
 
 private:
     // Fires a pulse along the connections.
@@ -61,15 +63,14 @@ private:
     double potential_;
     timestamp last_pulse_received_timestamp_;
     timestamp last_fired_timestamp_;
-
 };
 
 using neuron_ptr = std::shared_ptr<neuron>;
 
 struct connection {
     // Constructor
-    connection(neuron_ptr const& target, duration distance, double weight) :
-            target_(target), distance_(distance), weight_(weight) { }
+    connection(neuron_ptr target, duration distance, double weight)
+        : target_(std::move(target)), distance_(distance), weight_(weight) {}
 
     // Where this event will be applied to.
     neuron_ptr target_;
@@ -79,5 +80,4 @@ struct connection {
 
     // Is multiplied to a outgoing pulse, shall be in [-1, 1].
     double weight_;
-
 };
