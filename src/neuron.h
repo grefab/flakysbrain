@@ -8,7 +8,6 @@
 #include "types.h"
 
 class brain;
-
 struct connection;
 using connection_ptr = std::shared_ptr<connection>;
 
