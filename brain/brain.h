@@ -16,6 +16,9 @@ public:
     // Runs until no events are in the queue anymore.
     void run(bool with_maintenance = true);
 
+    // Empties event queue, causing main loop to end.
+    void kill();
+
     // Is called by neuron. Adds an event to the event queue.
     void add_event(event_ptr e);
 
@@ -48,7 +51,7 @@ private:
     };
     std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> events_{compare};
 
-    std::mutex m_;
+    std::recursive_mutex m_;
     std::vector<std::function<void(brain* b, timestamp now)>> maintenance_actions_;
 
     performance_measure perf_;

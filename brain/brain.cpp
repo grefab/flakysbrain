@@ -6,14 +6,23 @@ void brain::run(bool with_maintenance) {
     }
 
     while (!events_.empty()) {
-        auto& e = events_.top();
+        auto e = events_.top();
+        events_.pop();
 
         timestamp now = e->when_;
         e->action(this, now);
-        events_.pop();
 
         perf_();
     }
+}
+
+void brain::kill() {
+    // Clear event queue soon.
+    add_maintenance_action([](brain* b, timestamp now) {
+        while (!b->events_.empty()) {
+            b->events_.pop();
+        }
+    });
 }
 
 void brain::add_event(event_ptr e) {
@@ -53,7 +62,7 @@ void brain::remove_connection(neuron_ptr n, connection_ptr c) {
 }
 
 void brain::add_maintenance_action(std::function<void(brain* b, timestamp now)> maintenance_action) {
-    std::lock_guard<std::mutex> lock(m_);
+    std::lock_guard<std::recursive_mutex> lock(m_);
     maintenance_actions_.emplace_back(maintenance_action);
 }
 
@@ -62,7 +71,7 @@ void brain::add_maintenance_action(std::function<void(brain* b, timestamp now)> 
 void brain::maintenance(timestamp now) {
     // Work through other maintenance actions
     {
-        std::lock_guard<std::mutex> lock(m_);
+        std::lock_guard<std::recursive_mutex> lock(m_);
         for (auto& f : maintenance_actions_) {
             f(this, now);
         }
@@ -85,6 +94,8 @@ void brain::maintenance(timestamp now) {
     }
     events_ = new_events;
 
-    // Repeat this soon.
-    add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
+    // Repeat this soon if there are other things to do.
+    if (!events_.empty()) {
+        add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
+    }
 }
