@@ -9,5 +9,8 @@ cc_library(
         ],
         exclude = ["**/*_test.*"],
     ),
-    deps = ["//grefab/flakysbrain/brain"],
+    deps = [
+        "//grefab/flakysbrain/brain",
+        "@sdl2",
+    ],
 )
