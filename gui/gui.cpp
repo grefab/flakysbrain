@@ -14,22 +14,22 @@ gui::gui(brain* b) : brain_(b) {
     auto request_display_data = [this](brain* b, timestamp now) { abs_time_ += now; };
 
     thread_ = std::thread([this, request_display_data]() {
-        SDL_Window* window = NULL;
-        SDL_Surface* screenSurface = NULL;
+        SDL_Window* window = nullptr;
+        SDL_Surface* screenSurface = nullptr;
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-            fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());
-            return 1;
+            std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
+            return;
         }
         window = SDL_CreateWindow("hello_sdl2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == NULL) {
-            fprintf(stderr, "could not create window: %s\n", SDL_GetError());
-            return 1;
+        if (!window) {
+            std::cerr << "could not create window: " << SDL_GetError() << std::endl;
+            return;
         }
 
         screenSurface = SDL_GetWindowSurface(window);
 
         while (!close_thread_) {
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+            SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
             SDL_UpdateWindowSurface(window);
 
             brain_->add_maintenance_action(request_display_data);
