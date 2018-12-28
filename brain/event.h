@@ -29,6 +29,8 @@ struct maintenance_event : public event {
     virtual ~maintenance_event() = default;
 
     void action(brain* b, timestamp now) override;
+
+    constexpr static double timeout_ = 10000;
 };
 
 struct periodic_event : public event {

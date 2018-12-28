@@ -3,7 +3,7 @@
 
 void brain::run(bool with_maintenance) {
     if (with_maintenance) {
-        add_event(std::make_shared<maintenance_event>(100));
+        add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
     }
 
     while (!events_.empty()) {
@@ -53,6 +53,8 @@ void brain::remove_connection(neuron_ptr n, connection_ptr c) {
     n->connections_.erase(c);
 }
 
+/// Make sure that timestamps do not get out of hand, i.e. reach numeric limits. Therefore once in a while every
+/// timestamp is reduced by the current time, effectively becoming zero.
 void brain::maintenance(timestamp now) {
     for (auto& neuron : neurons_) {
         neuron->last_pulse_received_timestamp_ -= now;
@@ -68,5 +70,5 @@ void brain::maintenance(timestamp now) {
     }
     events_ = new_events;
 
-    add_event(std::make_shared<maintenance_event>(100));
+    add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
 }
