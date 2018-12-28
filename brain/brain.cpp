@@ -1,8 +1,10 @@
 #include "brain.h"
 #include <iostream>
 
-void brain::run() {
-    add_event(std::make_shared<maintenance_event>(100));
+void brain::run(bool with_maintenance) {
+    if (with_maintenance) {
+        add_event(std::make_shared<maintenance_event>(100));
+    }
 
     while (!events_.empty()) {
         auto& e = events_.top();

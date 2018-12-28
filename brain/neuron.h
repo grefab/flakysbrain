@@ -5,7 +5,7 @@
 #include <memory>
 #include <set>
 #include <utility>
-#include "types.h"
+#include "grefab/flakysbrain/brain/types.h"
 
 class brain;
 struct connection;

@@ -2,8 +2,8 @@
 // Created by gregor on 20.06.16.
 //
 
-#include "catch/catch.hpp"
-#include "../src/brain.h"
+#include "grefab/flakysbrain/brain/brain.h"
+#include "3rdparty/catch/catch.hpp"
 
 TEST_CASE("brain modifications", "[brain]") {
     brain b;
@@ -12,9 +12,7 @@ TEST_CASE("brain modifications", "[brain]") {
         auto n1 = b.add_neuron(std::make_shared<neuron>(1, 0.5));
         REQUIRE(b.neurons().size() == 1);
 
-        SECTION("new neurons have no connections") {
-            REQUIRE(n1->connections_.size() == 0);
-        }
+        SECTION("new neurons have no connections") { REQUIRE(n1->connections_.size() == 0); }
 
         SECTION("neurons can be deleted") {
             b.remove_neuron(n1);
@@ -53,7 +51,7 @@ TEST_CASE("brain operations", "[brain]") {
         REQUIRE(b.events_in_queue() == 1);
 
         SECTION("events are processed") {
-            b.run();
+            b.run(false);
             REQUIRE(b.events_in_queue() == 0);
         }
     }

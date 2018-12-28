@@ -1,7 +1,7 @@
 #pragma once
 
-#include "neuron.h"
-#include "types.h"
+#include "grefab/flakysbrain/brain/neuron.h"
+#include "grefab/flakysbrain/brain/types.h"
 
 struct event {
     explicit event(timestamp when);

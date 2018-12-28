@@ -5,15 +5,15 @@
 #include <queue>
 #include <unordered_set>
 #include "event.h"
-#include "neuron.h"
-#include "performance_measure.h"
+#include "grefab/flakysbrain/brain/neuron.h"
+#include "grefab/flakysbrain/brain/performance_measure.h"
 
 class brain {
     friend struct maintenance_event;
 
 public:
     // Runs until no events are in the queue anymore.
-    void run();
+    void run(bool with_maintenance = true);
 
     // Is called by neuron. Adds an event to the event queue.
     void add_event(event_ptr e);

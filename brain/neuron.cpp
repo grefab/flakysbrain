@@ -3,7 +3,7 @@
 //
 
 #include "neuron.h"
-#include "brain.h"
+#include "grefab/flakysbrain/brain/brain.h"
 
 void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
     // Modify our action potential in respect of time passed since last events.

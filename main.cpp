@@ -1,5 +1,5 @@
 #include <iostream>
-#include "brain.h"
+#include "grefab/flakysbrain/brain/brain.h"
 
 int main() {
     std::cout << "Running brain." << std::endl;

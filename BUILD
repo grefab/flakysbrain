@@ -2,5 +2,9 @@ package(default_visibility = ["//visibility:public"])
 
 cc_binary(
     name = "flakysbrain",
-    srcs = glob(["src/**"]),
+    srcs = glob([
+        "**/*.h",
+        "**/*.cpp",
+    ]),
+    deps = ["//grefab/flakysbrain/brain"],
 )
