@@ -1,5 +1,4 @@
-#include "brain.h"
-#include <iostream>
+#include "grefab/flakysbrain/brain/brain.h"
 
 void brain::run(bool with_maintenance) {
     if (with_maintenance) {
@@ -53,14 +52,30 @@ void brain::remove_connection(neuron_ptr n, connection_ptr c) {
     n->connections_.erase(c);
 }
 
+void brain::add_maintenance_action(std::function<void(brain* b, timestamp now)> maintenance_action) {
+    std::lock_guard<std::mutex> lock(m_);
+    maintenance_actions_.emplace_back(maintenance_action);
+}
+
 /// Make sure that timestamps do not get out of hand, i.e. reach numeric limits. Therefore once in a while every
-/// timestamp is reduced by the current time, effectively becoming zero.
+/// timestamp is reduced by the current time, effectively becoming zero. Events have to be adapted accordingly.
 void brain::maintenance(timestamp now) {
+    // Work through other maintenance actions
+    {
+        std::lock_guard<std::mutex> lock(m_);
+        for (auto& f : maintenance_actions_) {
+            f(this, now);
+        }
+        maintenance_actions_.clear();
+    }
+
+    // Reset timestamps of all our neurons.
     for (auto& neuron : neurons_) {
         neuron->last_pulse_received_timestamp_ -= now;
         neuron->last_fired_timestamp_ -= now;
     }
 
+    // Make a new event queue with events' due dates shifted accordingly.
     std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> new_events{compare};
     while (!events_.empty()) {
         auto new_event = events_.top();
@@ -70,5 +85,6 @@ void brain::maintenance(timestamp now) {
     }
     events_ = new_events;
 
+    // Repeat this soon.
     add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
 }

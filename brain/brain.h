@@ -2,6 +2,7 @@
 
 #include <deque>
 #include <functional>
+#include <mutex>
 #include <queue>
 #include <unordered_set>
 #include "event.h"
@@ -29,6 +30,9 @@ public:
     std::unordered_set<neuron_ptr> const& neurons() { return neurons_; }
     size_t events_in_queue() const { return events_.size(); }
 
+    // Maintenance
+    void add_maintenance_action(std::function<void(brain* b, timestamp now)> maintenance_action);
+
 private:
     // "Normalizies" brain, i.e. makes sure that there origin of time for all thing concerned with time
     // (neurons, events) is now.
@@ -43,6 +47,9 @@ private:
         return a->when_ > b->when_;
     };
     std::priority_queue<event_ptr, std::deque<event_ptr>, decltype(compare)> events_{compare};
+
+    std::mutex m_;
+    std::vector<std::function<void(brain* b, timestamp now)>> maintenance_actions_;
 
     performance_measure perf_;
 };
