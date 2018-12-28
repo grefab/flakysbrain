@@ -3,7 +3,7 @@
 #include <functional>
 #include <limits>
 #include <memory>
-#include <set>
+#include <unordered_set>
 #include <utility>
 #include "grefab/flakysbrain/brain/types.h"
 
@@ -17,7 +17,7 @@ struct neuron {
     // Constructor
     neuron(pulse power,
            double bias,
-           std::set<connection_ptr> connections = std::set<connection_ptr>(),
+           std::unordered_set<connection_ptr> connections = std::unordered_set<connection_ptr>(),
            double potential = 0,
            timestamp last_pulse_received_timestamp = std::numeric_limits<timestamp>::max(),
            timestamp last_fired_timestamp = std::numeric_limits<timestamp>::max())
@@ -40,7 +40,7 @@ struct neuron {
     double bias_;
 
     // Where and when to fire
-    std::set<connection_ptr> connections_;
+    std::unordered_set<connection_ptr> connections_;
 
     // Monitoring
     std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp now, pulse power) {};
