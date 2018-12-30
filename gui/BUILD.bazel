@@ -4,12 +4,20 @@ cc_library(
     name = "gui",
     srcs = glob(
         [
-            "**/*.h",
-            "**/*.cpp",
+            "*.h",
+            "*.cpp",
+            "GL/*.c",
+            "GL/*.h",
         ],
         exclude = ["**/*_test.*"],
     ),
+    includes = ["."],
+    linkopts = [
+        "-ldl",
+        "-lGL",
+    ],
     deps = [
+        "//3rdparty/imgui",
         "//grefab/flakysbrain/brain",
         "@sdl2",
     ],

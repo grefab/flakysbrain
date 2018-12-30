@@ -7,10 +7,8 @@ int main() {
     {
         brain_runner runner;
         runner.run();
-        {
-            gui g(&runner.brain_);
-            std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-        }
+        gui g(&runner.brain_);
+        g.wait();
     }
     std::cout << "Brain is dead." << std::endl;
 

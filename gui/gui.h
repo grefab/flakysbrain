@@ -13,6 +13,8 @@ public:
     explicit gui(brain* b);
     virtual ~gui();
 
+    void wait();
+
 private:
     brain* brain_;
     timestamp monotonic_now_ = 0;
