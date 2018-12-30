@@ -12,9 +12,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
 gui::gui(brain* b) : brain_(b) {
     std::cout << "Starting GUI" << std::endl;
 
@@ -65,20 +62,6 @@ gui::gui(brain* b) : brain_(b) {
         // Main loop
         ImVec4 const clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
         while (!close_thread_) {
-            // Request data
-            std::promise<timestamp> promise;
-            auto request_display_data = [this, &promise](brain* b, timestamp now) {
-                monotonic_now_ += now;
-
-                // Slow down brain
-                //                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                promise.set_value(now);
-            };
-
-            brain_->add_maintenance_action(request_display_data);
-            auto future = promise.get_future();
-            future.wait();
-
             // GUI actions
             SDL_Event event;
             while (SDL_PollEvent(&event)) {
@@ -108,7 +91,19 @@ gui::gui(brain* b) : brain_(b) {
             }
 
             {
-                // foo
+                // Request data
+                std::promise<timestamp> promise;
+                auto request_display_data = [this, &promise](brain* b, timestamp now) {
+                    monotonic_now_ += now;
+
+                    // Slow down brain
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    promise.set_value(now);
+                };
+
+                brain_->add_maintenance_action(request_display_data);
+                auto future = promise.get_future();
+                future.wait();
             }
 
             // Rendering
