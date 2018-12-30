@@ -32,7 +32,7 @@ struct maintenance_event : public event {
 
     void action(brain* b, timestamp now) override;
 
-    constexpr static double timeout_ = 10000;
+    constexpr static double timeout_ = 100;
 };
 
 struct periodic_event : public event {

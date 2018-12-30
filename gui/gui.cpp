@@ -4,6 +4,7 @@
 
 #include "gui.h"
 #include <SDL2/SDL.h>
+#include <future>
 #include <iostream>
 
 #define SCREEN_WIDTH 640
@@ -11,33 +12,56 @@
 
 gui::gui(brain* b) : brain_(b) {
     std::cout << "Starting GUI" << std::endl;
-    auto request_display_data = [this](brain* b, timestamp now) { abs_time_ += now; };
 
-    thread_ = std::thread([this, request_display_data]() {
+    thread_ = std::thread([this]() {
+        // Initialization
         SDL_Window* window = nullptr;
-        SDL_Surface* screenSurface = nullptr;
+        SDL_Renderer* renderer = nullptr;
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
             return;
         }
-        window = SDL_CreateWindow("hello_sdl2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (!window) {
+
+        if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer) != 0) {
             std::cerr << "could not create window: " << SDL_GetError() << std::endl;
             return;
         }
+        SDL_SetWindowTitle(window, "flakysbrain");
 
-        screenSurface = SDL_GetWindowSurface(window);
-
+        // Main loop
         while (!close_thread_) {
-            SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-            SDL_UpdateWindowSurface(window);
+            std::promise<timestamp> promise;
+            auto request_display_data = [this, &renderer, &promise](brain* b, timestamp now) {
+                monotonic_now_ += now;
+
+                // Clear screen
+                SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+                SDL_RenderClear(renderer);
+
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+                SDL_RenderDrawLine(renderer, 320, 200, 300, 240);
+                SDL_RenderDrawLine(renderer, 300, 240, 340, 240);
+                SDL_RenderDrawLine(renderer, 340, 240, 320, 200);
+                SDL_RenderPresent(renderer);
+
+                // Slow down brain
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                promise.set_value(now);
+            };
 
             brain_->add_maintenance_action(request_display_data);
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            auto future = promise.get_future();
+            future.wait();
+            std::cout << monotonic_now_ << " " << future.get() << std::endl;
         }
 
-        SDL_Delay(2000);
-        SDL_DestroyWindow(window);
+        // Shutdown
+        if (renderer) {
+            SDL_DestroyRenderer(renderer);
+        }
+        if (window) {
+            SDL_DestroyWindow(window);
+        }
         SDL_Quit();
     });
 }

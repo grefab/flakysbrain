@@ -15,7 +15,7 @@ public:
 
 private:
     brain* brain_;
-    timestamp abs_time_ = 0;
+    timestamp monotonic_now_ = 0;
 
     std::thread thread_;
     std::atomic_bool close_thread_{false};
