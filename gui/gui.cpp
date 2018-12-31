@@ -93,6 +93,7 @@ gui::gui(brain* b) : brain_(b) {
 
                 ImDrawList* list = ImGui::GetWindowDrawList();
 
+                ImVec2 canvas_pos = ImGui::GetCursorScreenPos();  // ImDrawList API uses screen coordinates!
                 ImVec2 lineP1 = {150.0f, 100.0f};
                 ImVec2 lineP2 = {150.0f, 300.0f};
                 static float thickness = 4.0f;
@@ -100,13 +101,18 @@ gui::gui(brain* b) : brain_(b) {
                 static float arrowHeight = 18.0f;
                 static float lineWidth = 4.0f;
 
-                list->PathLineTo({lineP1.x - thickness, lineP1.y + arrowHeight});   // P1
-                list->PathLineTo({lineP1.x - arrowWidth, lineP1.y + arrowHeight});  // P2
-                list->PathLineTo({lineP1.x, lineP1.y});                             // P3
-                list->PathLineTo({lineP1.x + arrowWidth, lineP1.y + arrowHeight});  // P4
-                list->PathLineTo({lineP1.x + thickness, lineP1.y + arrowHeight});   // P5
-                list->PathLineTo({lineP2.x + thickness, lineP2.y});                 // P6
-                list->PathLineTo({lineP2.x - thickness, lineP2.y});                 // P7
+                list->AddCircleFilled({canvas_pos.x + lineP1.x - thickness, canvas_pos.y + lineP1.y + arrowHeight},
+                                      50,
+                                      IM_COL32(128, 128, 128, 255),
+                                      120);
+
+                list->PathLineTo({canvas_pos.x + lineP1.x - thickness, canvas_pos.y + lineP1.y + arrowHeight});   // P1
+                list->PathLineTo({canvas_pos.x + lineP1.x - arrowWidth, canvas_pos.y + lineP1.y + arrowHeight});  // P2
+                list->PathLineTo({canvas_pos.x + lineP1.x, canvas_pos.y + lineP1.y});                             // P3
+                list->PathLineTo({canvas_pos.x + lineP1.x + arrowWidth, canvas_pos.y + lineP1.y + arrowHeight});  // P4
+                list->PathLineTo({canvas_pos.x + lineP1.x + thickness, canvas_pos.y + lineP1.y + arrowHeight});   // P5
+                list->PathLineTo({canvas_pos.x + lineP2.x + thickness, canvas_pos.y + lineP2.y});                 // P6
+                list->PathLineTo({canvas_pos.x + lineP2.x - thickness, canvas_pos.y + lineP2.y});                 // P7
                 list->PathStroke(IM_COL32(128, 128, 128, 255), true, lineWidth);
 
                 ImGui::End();
