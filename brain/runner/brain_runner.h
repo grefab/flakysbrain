@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <atomic>
 #include <thread>
 #include "grefab/flakysbrain/brain/api/Server.h"
 #include "grefab/flakysbrain/brain/brain.h"
