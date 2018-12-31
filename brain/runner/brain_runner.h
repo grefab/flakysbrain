@@ -17,5 +17,4 @@ public:
 
     brain brain_;
     std::thread thread_;
-    std::atomic_bool close_thread_{false};
 };

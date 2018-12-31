@@ -1,6 +1,5 @@
-#include "event.h"
-#include "brain.h"
 #include "grefab/flakysbrain/brain/event.h"
+#include "grefab/flakysbrain/brain/brain.h"
 
 event::event(timestamp when) : when_(when) {}
 

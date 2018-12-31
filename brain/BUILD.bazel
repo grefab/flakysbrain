@@ -9,7 +9,6 @@ cc_library(
         ],
         exclude = ["**/*_test.*"],
     ),
-    linkopts = ["-lpthread"],
 )
 
 cc_test(

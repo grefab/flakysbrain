@@ -2,7 +2,7 @@
 // Created by Gregor on 27.02.2016.
 //
 
-#include "neuron.h"
+#include "grefab/flakysbrain/brain/neuron.h"
 #include "grefab/flakysbrain/brain/brain.h"
 
 void neuron::apply_pulse(pulse p, timestamp now, brain* b) {

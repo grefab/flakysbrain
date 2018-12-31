@@ -1,4 +1,4 @@
-#include "performance_measure.h"
+#include "grefab/flakysbrain/brain/performance_measure.h"
 #include <iostream>
 
 void performance_measure::operator()() {

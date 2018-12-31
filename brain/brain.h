@@ -5,7 +5,7 @@
 #include <mutex>
 #include <queue>
 #include <unordered_set>
-#include "event.h"
+#include "grefab/flakysbrain/brain/event.h"
 #include "grefab/flakysbrain/brain/neuron.h"
 #include "grefab/flakysbrain/brain/performance_measure.h"
 

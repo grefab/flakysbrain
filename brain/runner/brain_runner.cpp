@@ -13,7 +13,6 @@ void brain_runner::run() {
 brain_runner::~brain_runner() {
     std::cout << "Closing runner" << std::endl;
     brain_.kill();
-    close_thread_ = true;
     if (thread_.joinable()) {
         thread_.join();
     }
