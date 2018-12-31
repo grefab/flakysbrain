@@ -15,7 +15,7 @@
 gui::gui(brain* b) : brain_(b) {
     std::cout << "Starting GUI" << std::endl;
 
-    thread_ = std::thread([this]() {
+    gui_thread_ = std::thread([this]() {
         // Setup SDL
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
             std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
@@ -81,29 +81,35 @@ gui::gui(brain* b) : brain_(b) {
             ImGui::NewFrame();
 
             {
+                // Display data
+                std::lock_guard<std::mutex> lock(display_data_.mutex_);
+
                 ImGui::Begin("Another Window");  // Pass a pointer to our bool variable (the window will have a closing
                                                  // button that will clear the bool when clicked)
-                ImGui::Text(std::to_string(monotonic_now_).c_str());
+                ImGui::Text(std::to_string(display_data_.monotonic_now_).c_str());
                 if (ImGui::Button("Close Me")) {
                     close_thread_ = true;
                 }
+
+                ImDrawList* list = ImGui::GetWindowDrawList();
+
+                ImVec2 lineP1 = {150.0f, 100.0f};
+                ImVec2 lineP2 = {150.0f, 300.0f};
+                static float thickness = 4.0f;
+                static float arrowWidth = 12.0f;
+                static float arrowHeight = 18.0f;
+                static float lineWidth = 4.0f;
+
+                list->PathLineTo({lineP1.x - thickness, lineP1.y + arrowHeight});   // P1
+                list->PathLineTo({lineP1.x - arrowWidth, lineP1.y + arrowHeight});  // P2
+                list->PathLineTo({lineP1.x, lineP1.y});                             // P3
+                list->PathLineTo({lineP1.x + arrowWidth, lineP1.y + arrowHeight});  // P4
+                list->PathLineTo({lineP1.x + thickness, lineP1.y + arrowHeight});   // P5
+                list->PathLineTo({lineP2.x + thickness, lineP2.y});                 // P6
+                list->PathLineTo({lineP2.x - thickness, lineP2.y});                 // P7
+                list->PathStroke(IM_COL32(128, 128, 128, 255), true, lineWidth);
+
                 ImGui::End();
-            }
-
-            {
-                // Request data
-                std::promise<timestamp> promise;
-                auto request_display_data = [this, &promise](brain* b, timestamp now) {
-                    monotonic_now_ += now;
-
-                    // Slow down brain
-                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                    promise.set_value(now);
-                };
-
-                brain_->add_maintenance_action(request_display_data);
-                auto future = promise.get_future();
-                future.wait();
             }
 
             // Rendering
@@ -125,20 +131,40 @@ gui::gui(brain* b) : brain_(b) {
         SDL_DestroyWindow(window);
         SDL_Quit();
     });
+
+    collect_thread_ = std::thread([this]() {
+        while (!close_thread_) {
+            // Request data
+            std::promise<timestamp> promise;
+            auto request_display_data = [&promise](brain* b, timestamp now) {
+                promise.set_value(now);
+
+                // Slow down brain
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            };
+            brain_->add_maintenance_action(request_display_data);
+
+            {
+                auto now = promise.get_future().get();
+                std::lock_guard<std::mutex> lock(display_data_.mutex_);
+                display_data_.monotonic_now_ += now;
+            }
+        }
+    });
 }
 
 gui::~gui() {
     std::cout << "Closing GUI" << std::endl;
     close_thread_ = true;
-    if (thread_.joinable()) {
-        thread_.join();
-    }
+    wait();
     std::cout << "GUI Closed" << std::endl;
 }
 
 void gui::wait() {
-    std::cout << "Waiting for user to close GUI." << std::endl;
-    if (thread_.joinable()) {
-        thread_.join();
+    if (gui_thread_.joinable()) {
+        gui_thread_.join();
+    }
+    if (collect_thread_.joinable()) {
+        collect_thread_.join();
     }
 }

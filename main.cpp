@@ -8,6 +8,8 @@ int main() {
         brain_runner runner;
         runner.run();
         gui g(&runner.brain_);
+
+        std::cout << "Waiting for user to close GUI..." << std::endl;
         g.wait();
     }
     std::cout << "Brain is dead." << std::endl;
