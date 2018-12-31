@@ -12,5 +12,6 @@ public:
 public:
     grpc::Status get_snapshot(grpc::ServerContext* context, const brain_api::SnapshotRequest* request, brain_api::Snapshot* response) override;
 
+private:
     brain* brain_;
 };
