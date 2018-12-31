@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package brain;
+package brain_api;
 
 message SnapshotRequest {
 }

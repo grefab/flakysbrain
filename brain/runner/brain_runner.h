@@ -6,6 +6,7 @@
 
 #include <atomic>
 #include <thread>
+#include "grefab/flakysbrain/brain/api/Server.h"
 #include "grefab/flakysbrain/brain/brain.h"
 
 class brain_runner {
@@ -16,5 +17,8 @@ public:
     void run();
 
     brain brain_;
-    std::thread thread_;
+    std::thread run_thread_;
+
+    Service service_;
+    Server server_{"0.0.0.0"};
 };

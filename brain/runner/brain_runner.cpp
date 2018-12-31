@@ -5,16 +5,13 @@
 #include "grefab/flakysbrain/brain/runner/brain_runner.h"
 #include <iostream>
 
-void brain_runner::run() {
-    std::cout << "Starting runner" << std::endl;
-    thread_ = std::thread([this]() { brain_.run(); });
-}
-
 brain_runner::~brain_runner() {
     std::cout << "Closing runner" << std::endl;
+    //    server_.kill();
+    //    server_.wait();
     brain_.kill();
-    if (thread_.joinable()) {
-        thread_.join();
+    if (run_thread_.joinable()) {
+        run_thread_.join();
     }
     std::cout << "Runner closed" << std::endl;
 }
@@ -42,4 +39,11 @@ brain_runner::brain_runner() {
     // Initial event
     brain_.add_event(
         std::make_shared<periodic_event>(0, 100, [eye](brain* b, timestamp now) { eye->apply_pulse(1, now, b); }));
+}
+
+void brain_runner::run() {
+    std::cout << "Starting runner" << std::endl;
+    run_thread_ = std::thread([this]() { brain_.run(); });
+
+    server_.run(&service_);
 }

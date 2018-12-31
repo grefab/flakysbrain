@@ -4,10 +4,10 @@
 #include <grpc/grpc.h>
 #include "grefab/flakysbrain/brain/api/api.grpc.pb.h"
 
-class Service final : public brain::Api::Service {
+class Service final : public brain_api::Api::Service {
 public:
     Service();
 
 public:
-    grpc::Status get_snapshot(grpc::ServerContext* context, const brain::SnapshotRequest* request, brain::Snapshot* response) override;
+    grpc::Status get_snapshot(grpc::ServerContext* context, const brain_api::SnapshotRequest* request, brain_api::Snapshot* response) override;
 };

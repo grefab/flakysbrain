@@ -2,6 +2,6 @@
 
 Service::Service() {}
 
-grpc::Status Service::get_snapshot(grpc::ServerContext* context, const brain::SnapshotRequest* request, brain::Snapshot* response) {
+grpc::Status Service::get_snapshot(grpc::ServerContext* context, const brain_api::SnapshotRequest* request, brain_api::Snapshot* response) {
     return grpc::Status::OK;
 }

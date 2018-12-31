@@ -11,6 +11,10 @@ void Server::run(Service* service) {
     std::cout << "Server listening on " << address_ << std::endl;
 }
 
+void Server::kill() {
+    server_->Shutdown();
+}
+
 void Server::wait() {
     server_->Wait();
     std::cout << "Server closed" << address_ << std::endl;

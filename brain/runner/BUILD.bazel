@@ -8,5 +8,8 @@ cc_library(
             "**/*.cpp",
         ],
     ),
-    deps = ["//grefab/flakysbrain/brain"],
+    deps = [
+        "//grefab/flakysbrain/brain",
+        "//grefab/flakysbrain/brain/api:service",
+    ],
 )

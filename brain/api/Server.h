@@ -10,6 +10,7 @@ public:
 
 public:
     void run(Service* service);
+    void kill();
     void wait();
 
 private:
