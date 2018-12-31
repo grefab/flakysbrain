@@ -17,8 +17,9 @@ public:
     void run();
 
     brain brain_;
-    std::thread run_thread_;
 
+private:
+    std::thread run_thread_;
     Service service_{&brain_};
     Server server_{"0.0.0.0"};
 };
