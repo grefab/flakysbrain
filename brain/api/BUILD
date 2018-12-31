@@ -22,5 +22,6 @@ cc_library(
     ),
     deps = [
         ":cpp_proto",
+        "//grefab/flakysbrain/brain",
     ],
 )
