@@ -1,5 +1,5 @@
 #include <iostream>
-#include "grefab/flakysbrain/brain/brain_runner.h"
+#include "grefab/flakysbrain/brain/runner/brain_runner.h"
 #include "grefab/flakysbrain/gui/gui.h"
 
 int main() {

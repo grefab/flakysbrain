@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package brain;
+
+message SnapshotRequest {
+}
+
+message Snapshot {
+}
+
+service Api {
+    rpc get_snapshot (SnapshotRequest) returns (Snapshot);
+}

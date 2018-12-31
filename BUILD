@@ -7,7 +7,7 @@ cc_binary(
         "**/*.cpp",
     ]),
     deps = [
-        "//grefab/flakysbrain/brain",
+        "//grefab/flakysbrain/brain/runner",
         "//grefab/flakysbrain/gui",
     ],
 )

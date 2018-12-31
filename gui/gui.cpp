@@ -86,7 +86,7 @@ gui::gui(brain* b) : brain_(b) {
 
                 ImGui::Begin("Another Window");  // Pass a pointer to our bool variable (the window will have a closing
                                                  // button that will clear the bool when clicked)
-                ImGui::Text(std::to_string(display_data_.monotonic_now_).c_str());
+                ImGui::Text("%s", std::to_string(display_data_.monotonic_now_).c_str());
                 if (ImGui::Button("Close Me")) {
                     close_thread_ = true;
                 }
@@ -140,7 +140,7 @@ gui::gui(brain* b) : brain_(b) {
                 promise.set_value(now);
 
                 // Slow down brain
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                //                std::this_thread::sleep_for(std::chrono::milliseconds(100));
             };
             brain_->add_maintenance_action(request_display_data);
 
