@@ -18,7 +18,7 @@ cc_library(
     ],
     deps = [
         "//3rdparty/imgui",
-        "//grefab/flakysbrain/brain",
+        "//grefab/flakysbrain/brain/api:service",
         "@sdl2",
     ],
 )

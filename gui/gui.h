@@ -6,6 +6,7 @@
 
 #include <atomic>
 #include <thread>
+#include "grefab/flakysbrain/brain/api/api.grpc.pb.h"
 #include "grefab/flakysbrain/brain/brain.h"
 
 class gui {
@@ -13,6 +14,7 @@ public:
     explicit gui(brain* b);
     virtual ~gui();
 
+    void connect_to(std::string address);
     void wait();
 
     struct DisplayData {

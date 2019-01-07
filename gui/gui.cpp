@@ -2,7 +2,7 @@
 // Created by grefab on 28.12.18.
 //
 
-#include "gui.h"
+#include "grefab/flakysbrain/gui/gui.h"
 #include <GL/gl3w.h>  // Initialize with gl3wInit()
 #include <SDL2/SDL.h>
 #include <gui.h>
@@ -19,7 +19,7 @@ gui::gui(brain* b) : brain_(b) {
         // Setup SDL
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
             std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
-            return;
+            return true;
         }
 
         // GL 3.0 + GLSL 130
@@ -165,6 +165,8 @@ gui::~gui() {
     wait();
     std::cout << "GUI Closed" << std::endl;
 }
+
+void gui::connect_to(std::string address) {}
 
 void gui::wait() {
     if (gui_thread_.joinable()) {
