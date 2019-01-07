@@ -19,7 +19,7 @@ gui::gui(brain* b) : brain_(b) {
         // Setup SDL
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
             std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
-            return true;
+            return;
         }
 
         // GL 3.0 + GLSL 130
