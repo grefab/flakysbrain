@@ -1,5 +1,7 @@
 #include "brain/performance_measure.h"
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 
 void performance_measure::operator()() {
@@ -10,7 +12,7 @@ void performance_measure::operator()() {
         auto events_per_second = duration > 0 ? counter_ * 1000 / duration : 0;
 
         // Log output
-        std::cout << "executed " << counter_ << " events in " << duration << "ms, " << events_per_second << "e/s" << std::endl;
+        spdlog::info("executed {} events in {}ms, {}e/s", counter_, duration, events_per_second);
 
         // Make sure we do not log too frequently.
         if (duration < 1000) {

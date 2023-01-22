@@ -4,17 +4,19 @@
 
 #include "brain/runner/brain_runner.h"
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 
 brain_runner::~brain_runner() {
-    std::cout << "Closing runner" << std::endl;
+    spdlog::info("Closing runner");
     server_.kill();
     server_.wait();
     brain_.kill();
     if (run_thread_.joinable()) {
         run_thread_.join();
     }
-    std::cout << "Runner closed" << std::endl;
+    spdlog::info("Runner closed");
 }
 
 brain_runner::brain_runner() {
@@ -43,7 +45,7 @@ brain_runner::brain_runner() {
 }
 
 void brain_runner::run() {
-    std::cout << "Starting runner" << std::endl;
+    spdlog::info("Starting runner");
     run_thread_ = std::thread([this]() { brain_.run(); });
 
     server_.run(&service_);

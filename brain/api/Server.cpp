@@ -2,6 +2,7 @@
 
 #include <grpc++/security/server_credentials.h>
 #include <grpc++/server_builder.h>
+#include <spdlog/spdlog.h>
 
 #include <iostream>
 
@@ -10,7 +11,7 @@ void Server::run(Service* service) {
     builder.AddListeningPort(address_, grpc::InsecureServerCredentials());
     builder.RegisterService(service);
     server_ = builder.BuildAndStart();
-    std::cout << "Server listening on " << address_ << std::endl;
+    spdlog::info("Server listening on {}", address_);
 }
 
 void Server::kill() {
@@ -19,5 +20,5 @@ void Server::kill() {
 
 void Server::wait() {
     server_->Wait();
-    std::cout << "Server closed" << address_ << std::endl;
+    spdlog::info("Server closed: {}", address_);
 }

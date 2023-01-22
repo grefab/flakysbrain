@@ -8,6 +8,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//3rdparty/spdlog",
         "//brain",
         "//brain/api/proto:api_grpc_proto",
     ],
