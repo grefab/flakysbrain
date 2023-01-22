@@ -1,8 +1,8 @@
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/brain.h"
 
 void brain::run(bool with_maintenance) {
     if (with_maintenance) {
-        add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
+        add_event(std::make_shared<periodic_event>(100, 100, [](brain* b, timestamp now) { b->maintenance(now); }));
     }
 
     while (!events_.empty()) {
@@ -93,9 +93,4 @@ void brain::maintenance(timestamp now) {
         events_.pop();
     }
     events_ = new_events;
-
-    // Repeat this soon if there are other things to do.
-    if (!events_.empty()) {
-        add_event(std::make_shared<maintenance_event>(maintenance_event::timeout_));
-    }
 }

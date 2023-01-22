@@ -1,0 +1,14 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "sdl2",
+    hdrs = glob(["Headers/*.h"]),
+    include_prefix = "SDL2",
+    includes = ["Header"],  # Optional.
+    linkopts = [
+        "-F/Library/Frameworks",
+        "-framework SDL2",
+    ],
+    strip_include_prefix = "Headers",
+    visibility = ["//visibility:public"],
+)

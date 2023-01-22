@@ -9,7 +9,7 @@ cc_library(
         ],
     ),
     deps = [
-        "//grefab/flakysbrain/brain",
-        "//grefab/flakysbrain/brain/api:service",
+        "//brain",
+        "//brain/api:service",
     ],
 )

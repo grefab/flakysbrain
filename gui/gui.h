@@ -6,8 +6,8 @@
 
 #include <atomic>
 #include <thread>
-#include "grefab/flakysbrain/brain/api/api.grpc.pb.h"
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/api/api.grpc.pb.h"
+#include "brain/brain.h"
 
 class gui {
 public:

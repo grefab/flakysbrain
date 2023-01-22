@@ -1,7 +1,7 @@
 #pragma once
 
-#include "grefab/flakysbrain/brain/neuron.h"
-#include "grefab/flakysbrain/brain/types.h"
+#include "brain/neuron.h"
+#include "brain/types.h"
 
 struct event {
     explicit event(timestamp when);
@@ -24,15 +24,6 @@ struct neuronal_event : public event {
 private:
     neuron_ptr target_;
     pulse pulse_;
-};
-
-struct maintenance_event : public event {
-    explicit maintenance_event(timestamp when) : event(when) {}
-    ~maintenance_event() override = default;
-
-    void action(brain* b, timestamp now) override;
-
-    constexpr static double timeout_ = 100;
 };
 
 struct periodic_event : public event {

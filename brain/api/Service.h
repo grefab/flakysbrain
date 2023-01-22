@@ -2,8 +2,8 @@
 
 #include <grpc++/server_context.h>
 #include <grpc/grpc.h>
-#include "grefab/flakysbrain/brain/api/api.grpc.pb.h"
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/api/api.grpc.pb.h"
+#include "brain/brain.h"
 
 class Service final : public brain_api::Api::Service {
 public:

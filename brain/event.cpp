@@ -1,14 +1,10 @@
-#include "grefab/flakysbrain/brain/event.h"
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/event.h"
+#include "brain/brain.h"
 
 event::event(timestamp when) : when_(when) {}
 
 void neuronal_event::action(brain* b, timestamp now) {
     target_->apply_pulse(pulse_, now, b);
-}
-
-void maintenance_event::action(brain* b, timestamp now) {
-    b->maintenance(now);
 }
 
 periodic_event::periodic_event(timestamp when, duration period, std::function<void(brain* b, timestamp now)> f)

@@ -1,15 +1,29 @@
-package(default_visibility = ["//visibility:public"])
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
 proto_library(
     name = "proto",
     srcs = ["api.proto"],
+    visibility = ["//visibility:public"],
 )
 
-load("@build_stack_rules_proto//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
-
-cpp_grpc_library(
-    name = "cpp_proto",
+cc_proto_library(
+    name = "cc_proto",
+    visibility = ["//visibility:public"],
     deps = [":proto"],
+)
+
+cc_grpc_library(
+    name = "cc_grpc_proto",
+    srcs = [":proto"],
+    grpc_only = True,
+    proto_only = False,
+    visibility = ["//visibility:public"],
+    well_known_protos = "@com_google_protobuf//:well_known_protos",
+    deps = [
+        ":cc_proto",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
 )
 
 cc_library(
@@ -20,8 +34,9 @@ cc_library(
             "**/*.h",
         ],
     ),
+    visibility = ["//visibility:public"],
     deps = [
-        ":cpp_proto",
-        "//grefab/flakysbrain/brain",
+        ":cc_grpc_proto",
+        "//brain",
     ],
 )

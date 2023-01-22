@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_set>
 #include <utility>
-#include "grefab/flakysbrain/brain/types.h"
+#include "brain/types.h"
 
 class brain;
 struct connection;
@@ -77,6 +77,6 @@ struct connection {
     // The timely distance to the target, shall be positive.
     duration distance_;
 
-    // Is multiplied to a outgoing pulse, shall be in [-1, 1].
+    // Is multiplied to an outgoing pulse, shall be in [-1, 1].
     double weight_;
 };

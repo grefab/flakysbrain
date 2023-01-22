@@ -12,13 +12,9 @@ cc_library(
         exclude = ["**/*_test.*"],
     ),
     includes = ["."],
-    linkopts = [
-        "-ldl",
-        "-lGL",
-    ],
     deps = [
-        "//3rdparty/imgui",
-        "//grefab/flakysbrain/brain/api:service",
+        "//3rdparty/imgui-docking",
+        "//brain/api:service",
         "@sdl2",
     ],
 )

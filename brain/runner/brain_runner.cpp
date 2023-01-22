@@ -2,7 +2,7 @@
 // Created by grefab on 28.12.18.
 //
 
-#include "grefab/flakysbrain/brain/runner/brain_runner.h"
+#include "brain/runner/brain_runner.h"
 #include <iostream>
 
 brain_runner::~brain_runner() {

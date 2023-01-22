@@ -5,9 +5,10 @@
 #include <mutex>
 #include <queue>
 #include <unordered_set>
-#include "grefab/flakysbrain/brain/event.h"
-#include "grefab/flakysbrain/brain/neuron.h"
-#include "grefab/flakysbrain/brain/performance_measure.h"
+
+#include "brain/event.h"
+#include "brain/neuron.h"
+#include "brain/performance_measure.h"
 
 class brain {
     friend struct maintenance_event;

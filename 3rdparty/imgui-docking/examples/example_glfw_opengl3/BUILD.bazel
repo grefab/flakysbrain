@@ -1,0 +1,12 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "cmd",
+    srcs = [
+        "main.cpp",
+    ],
+    deps = [
+        "//3rdparty/imgui-docking",
+        "//3rdparty/imgui-docking/backends:glfw_opengl3",
+    ],
+)

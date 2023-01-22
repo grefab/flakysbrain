@@ -1,3 +1,16 @@
+# bazel files
+/bazel-*
+
+# IDE files
 .idea/
-cmake-build-*/
-/.project
+.clwb/
+.ijwb/
+.vscode/
+
+
+# qt files
+build-*/
+
+# cmake files
+CMakeLists.txt.user
+cmake-build*/

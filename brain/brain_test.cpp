@@ -2,7 +2,7 @@
 // Created by gregor on 20.06.16.
 //
 
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/brain.h"
 #include "3rdparty/catch/catch.hpp"
 
 TEST_CASE("brain modifications", "[brain]") {

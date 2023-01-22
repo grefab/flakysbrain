@@ -5,8 +5,8 @@
 #pragma once
 
 #include <thread>
-#include "grefab/flakysbrain/brain/api/Server.h"
-#include "grefab/flakysbrain/brain/brain.h"
+#include "brain/api/Server.h"
+#include "brain/brain.h"
 
 class brain_runner {
 public:

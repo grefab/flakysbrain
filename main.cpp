@@ -1,6 +1,6 @@
 #include <iostream>
-#include "grefab/flakysbrain/brain/runner/brain_runner.h"
-#include "grefab/flakysbrain/gui/gui.h"
+#include "brain/runner/brain_runner.h"
+#include "gui/gui.h"
 
 int main() {
     std::cout << "Running brain." << std::endl;

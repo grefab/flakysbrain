@@ -2,7 +2,7 @@
 
 #include <grpc++/server.h>
 #include <memory>
-#include "grefab/flakysbrain/brain/api/Service.h"
+#include "brain/api/Service.h"
 
 class Server {
 public:
