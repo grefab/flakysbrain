@@ -20,7 +20,7 @@ void brain_mass::remove_neuron(neuron_ptr n) {
   for (auto& neuron : neurons_) {
     for (auto c_it = neuron->connections.begin();
          c_it != neuron->connections.end();) {
-      if ((*c_it)->target_ == n) {
+      if ((*c_it)->target == n) {
         neuron->connections.erase(c_it++);
       } else {
         ++c_it;
@@ -35,4 +35,25 @@ void brain_mass::add_connection(neuron_ptr n, connection_ptr c) {
 
 void brain_mass::remove_connection(neuron_ptr n, connection_ptr c) {
   n->connections.erase(c);
+}
+
+brain_api::Snapshot brain_mass::makeSnapshot() const {
+  brain_api::Snapshot s;
+
+  for (auto const& neuron : neurons()) {
+    brain_api::Neuron n;
+    n.set_id(neuron->id);
+    n.set_power(neuron->power);
+    n.set_bias(neuron->bias);
+    n.set_potential(neuron->potential_);
+    for (auto const& connection : neuron->connections) {
+      brain_api::Connection c;
+      c.set_to_id(connection->target->id);
+      c.set_weight(connection->weight);
+      *n.add_connections() = c;
+    }
+    *s.add_neurons() = n;
+  }
+
+  return s;
 }

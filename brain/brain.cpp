@@ -44,7 +44,7 @@ void brain::add_event(event_ptr e) {
 
 void brain::add_maintenance_action(
   std::function<void(brain* b, timestamp now)> maintenance_action) {
-  std::lock_guard<std::recursive_mutex> lock(m_);
+  std::lock_guard<std::recursive_mutex> lock(maintenance_actions_mutex_);
   maintenance_actions_.emplace_back(std::move(maintenance_action));
 }
 
@@ -54,7 +54,7 @@ void brain::add_maintenance_action(
 void brain::maintenance(timestamp now) {
   // Work through other maintenance actions
   {
-    std::lock_guard<std::recursive_mutex> lock(m_);
+    std::lock_guard<std::recursive_mutex> lock(maintenance_actions_mutex_);
     for (auto& f : maintenance_actions_) {
       f(this, now);
     }

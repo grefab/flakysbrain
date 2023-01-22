@@ -15,5 +15,6 @@ cc_library(
         "//brain/api:service",
         "//common/imui:lib",
         "//common/imui/graphics:lib",
+        "//common/threadsafe:lib",
     ],
 )

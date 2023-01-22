@@ -10,9 +10,9 @@ class Service final : public brain_api::Api::Service {
   explicit Service(brain* brain) : brain_(brain) {}
 
   public:
-  grpc::Status get_snapshot(grpc::ServerContext* context,
-                            const brain_api::SnapshotRequest* request,
-                            brain_api::Snapshot* response) override;
+  grpc::Status getSnapshot(grpc::ServerContext* context,
+                           const google::protobuf::Empty* request,
+                           brain_api::Snapshot* response) override;
 
   private:
   brain* brain_;

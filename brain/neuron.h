@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <functional>
 #include <limits>
 #include <memory>
@@ -11,11 +12,16 @@ class brain;
 struct connection;
 using connection_ptr = std::shared_ptr<connection>;
 
+static std::atomic_uint32_t next_id = 0;
+
 struct neuron {
   friend class brain;
+  friend class brain_mass;
+
+  std::atomic_uint32_t const id;
 
   // Constructor
-  neuron(pulse power, double bias) : power(power), bias(bias) {}
+  neuron(pulse power, double bias) : id(next_id++), power(power), bias(bias) {}
 
   // Is called by brain when an event reaches this neuron.
   void apply_pulse(pulse p, timestamp now, brain* b);
@@ -51,6 +57,8 @@ struct neuron {
   timestamp last_pulse_received_timestamp_ =
     std::numeric_limits<timestamp>::max();
   timestamp last_fired_timestamp_ = std::numeric_limits<timestamp>::max();
+
+  // Display stuff
 };
 
 using neuron_ptr = std::shared_ptr<neuron>;
@@ -58,14 +66,14 @@ using neuron_ptr = std::shared_ptr<neuron>;
 struct connection {
   // Constructor
   connection(neuron_ptr target, duration distance, double weight)
-      : target_(std::move(target)), distance_(distance), weight_(weight) {}
+      : target(std::move(target)), distance(distance), weight(weight) {}
 
   // Where this event will be applied to.
-  neuron_ptr target_;
+  neuron_ptr target;
 
   // The timely distance to the target, shall be positive.
-  duration distance_;
+  duration distance;
 
   // Is multiplied to an outgoing pulse, shall be in [-1, 1].
-  double weight_;
+  double weight;
 };

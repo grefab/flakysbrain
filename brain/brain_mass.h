@@ -5,6 +5,7 @@
 #pragma once
 
 #include <unordered_set>
+#include "brain/api/proto/api.pb.h"
 #include "brain/neuron.h"
 
 class brain_mass {
@@ -18,7 +19,9 @@ class brain_mass {
   void add_connection(neuron_ptr n, connection_ptr c);
   void remove_connection(neuron_ptr n, connection_ptr c);
 
-  std::unordered_set<neuron_ptr> const& neurons() { return neurons_; }
+  std::unordered_set<neuron_ptr> const& neurons() const { return neurons_; }
+
+  brain_api::Snapshot makeSnapshot() const;
 
   private:
   // Contains all neurons in this brain. Mainly used for bookkeeping.

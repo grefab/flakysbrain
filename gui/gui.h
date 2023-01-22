@@ -8,6 +8,7 @@
 #include <thread>
 #include "brain/api/proto/api.grpc.pb.h"
 #include "brain/brain.h"
+#include "common/threadsafe/threadsafe.h"
 
 class gui {
   public:
@@ -17,11 +18,7 @@ class gui {
   void connect_to(std::string const& address);
   void run();
 
-  struct DisplayData {
-    timestamp last_executed_event_ts_ = 0;
-
-    std::mutex mutex_;
-  } display_data_;
+  isotronic::threadsafe<brain_api::Snapshot> display_data_;
 
   private:
   brain* brain_;

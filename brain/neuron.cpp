@@ -25,9 +25,9 @@ void neuron::fire(timestamp now, brain* b) {
 
   // Add events in the future for all our connections.
   for (auto const& c : connections) {
-    b->add_event(std::make_shared<neuronal_event>(now + c->distance_,
-                                                  c->target_,
-                                                  power * c->weight_));
+    b->add_event(std::make_shared<neuronal_event>(now + c->distance,
+                                                  c->target,
+                                                  power * c->weight));
   }
 
   last_fired_timestamp_ = now;

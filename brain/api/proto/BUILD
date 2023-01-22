@@ -5,6 +5,9 @@ proto_library(
     name = "api_proto",
     srcs = ["api.proto"],
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:empty_proto",
+    ],
 )
 
 cc_proto_library(

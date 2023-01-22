@@ -11,21 +11,16 @@
 gui::gui(brain* b) : brain_(b) {
   collect_thread_ = std::thread([this]() {
     while (!close_thread_) {
-      // Request data
-      std::promise<timestamp> promise;
+      std::promise<brain_api::Snapshot> promise;
       auto request_display_data = [&promise](brain* b, timestamp now) {
-        promise.set_value(b->last_executed_event_ts());
-
+        auto snapshot = b->brain_mass_->makeSnapshot();
+        snapshot.set_last_executed(b->last_executed_event_ts_);
+        promise.set_value(snapshot);
         // Slow down brain
-        //                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //        std::this_thread::sleep_for(std::chrono::milliseconds(100));
       };
       brain_->add_maintenance_action(request_display_data);
-
-      {
-        auto last_executed_event_ts = promise.get_future().get();
-        std::lock_guard<std::mutex> lock(display_data_.mutex_);
-        display_data_.last_executed_event_ts_ = last_executed_event_ts;
-      }
+      display_data_.set(promise.get_future().get());
     }
   });
 }
@@ -49,11 +44,8 @@ void gui::run() {
     ui.startFrame();
 
     // Display data
-    std::lock_guard<std::mutex> lock(display_data_.mutex_);
-
     ImGui::Begin("Yay Window");
-    ImGui::Text("%s",
-                std::to_string(display_data_.last_executed_event_ts_).c_str());
+    ImGui::Text("%s", std::to_string(display_data_->last_executed()).c_str());
 
     ImGui::End();
 

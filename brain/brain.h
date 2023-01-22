@@ -12,6 +12,9 @@
 #include "brain/performance_measure.h"
 
 class brain {
+  friend class Service;
+  friend class gui;
+
   public:
   explicit brain(brain_mass_ptr brain_mass)
       : brain_mass_(std::move(brain_mass)) {}
@@ -51,7 +54,7 @@ class brain {
   timestamp last_executed_event_ts_ = 0;
 
   // Enqueued actions for interacting with the brain
-  std::recursive_mutex m_;
+  std::recursive_mutex maintenance_actions_mutex_;
   std::vector<std::function<void(brain* b, timestamp now)>> maintenance_actions_;
 
   performance_measure perf_;

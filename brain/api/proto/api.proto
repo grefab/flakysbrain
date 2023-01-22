@@ -2,12 +2,26 @@ syntax = "proto3";
 
 package brain_api;
 
-message SnapshotRequest {
+import "google/protobuf/empty.proto";
+
+service Api {
+    rpc getSnapshot (google.protobuf.Empty) returns (Snapshot);
 }
 
 message Snapshot {
+    repeated Neuron neurons = 1;
+    double last_executed = 2;
 }
 
-service Api {
-    rpc get_snapshot (SnapshotRequest) returns (Snapshot);
+message Neuron {
+    uint32 id = 1;
+    repeated Connection connections = 2;
+    double power = 3;
+    double bias = 4;
+    double potential = 5;
+}
+
+message Connection {
+    uint32 to_id = 1;
+    double weight = 2;
 }
