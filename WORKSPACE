@@ -54,3 +54,36 @@ new_local_repository(
     build_file = "3rdparty/sdl.build",
     path = "/Library/Frameworks/SDL2.framework",
 )
+
+#
+# CMAKE / foreign rules
+#
+# Group the sources of the library so that CMake rule have access to it
+all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//visibility:public"])"""
+
+http_archive(
+    name = "rules_foreign_cc",
+    sha256 = "2a4d07cd64b0719b39a7c12218a3e507672b82a97b98c6a89d38565894cf7c51",
+    strip_prefix = "rules_foreign_cc-0.9.0",
+    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/refs/tags/0.9.0.tar.gz",
+)
+
+load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+
+# This sets up some common toolchains for building targets. For more details, please see
+# https://bazelbuild.github.io/rules_foreign_cc/0.8.0/flatten.html#rules_foreign_cc_dependencies
+rules_foreign_cc_dependencies()
+
+#
+# OpenCV
+#
+
+http_archive(
+    name = "opencv",
+    build_file_content = all_content,
+    sha256 = "a5839ba52aaced93f1b70d416bbdde1e32bcfcafb38cc9c6bc73331c09cb1a5c",
+    strip_prefix = "opencv-778faddbd8e997af57202cf4fe633d54f538fe93",
+    urls = [
+        "https://github.com/opencv/opencv/archive/778faddbd8e997af57202cf4fe633d54f538fe93.zip",
+    ],
+)

@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+import "common/proto/Point.proto";
+
+message Circle {
+  Point center = 1;
+  double radius = 2;
+}

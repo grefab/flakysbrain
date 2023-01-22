@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+// Right-open interval: beginTimestamp is included, endTimestamp not.
+// Time stamps are denoted in ISO 8601 for UTC including fractions of a second.
+// e.g.: 2018-01-02T06:16:29.607Z
+message TimeFrame {
+  string begin_timestamp = 1;
+  string end_timestamp = 2;
+}

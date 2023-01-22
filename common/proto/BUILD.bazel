@@ -1,0 +1,26 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+cc_proto_library(
+    name = "common_cc_proto",
+    visibility = ["//visibility:public"],
+    deps = [":common_proto"],
+)
+
+proto_library(
+    name = "common_proto",
+    srcs = [
+        "Circle.proto",
+        "Color.proto",
+        "CvMat.proto",
+        "Empty.proto",
+        "Line.proto",
+        "Parameter.proto",
+        "Path.proto",
+        "Point.proto",
+        "Point2d.proto",
+        "Rect.proto",
+        "Statistics.proto",
+        "TimeFrame.proto",
+    ],
+    visibility = ["//visibility:public"],
+)

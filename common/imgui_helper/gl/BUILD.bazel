@@ -1,0 +1,19 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "gl_helper.cpp",
+        "gl_helper.h",
+    ],
+    linkopts = [
+        "-framework OpenGL",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/imgui-docking",
+        "//3rdparty/opencv/static:opencv",
+        "//common/geometry:lib",
+        "//common/proto/geometry:lib",
+    ],
+)

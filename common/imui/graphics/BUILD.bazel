@@ -1,0 +1,18 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "graphics_window.cpp",
+        "graphics_window.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/imgui-docking",
+        "//3rdparty/opencv/static:opencv",
+        "//3rdparty/spdlog",
+        "//common/imgui_helper:lib",
+        "//common/imgui_helper/gl:lib",
+        "//common/imui/graphics/view:lib",
+    ],
+)

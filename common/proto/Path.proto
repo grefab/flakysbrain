@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+import "common/proto/Point.proto";
+
+message Path {
+  repeated Point points = 1;
+}

@@ -1,0 +1,30 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "view.cpp",
+        "view.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":view_cc_proto",
+        "//3rdparty/imgui-docking",
+        "//3rdparty/opencv/static:opencv",
+        "//common/imgui_helper:lib",
+    ],
+)
+
+proto_library(
+    name = "view_proto",
+    srcs = [
+        "view.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_proto_library(
+    name = "view_cc_proto",
+    visibility = ["//visibility:public"],
+    deps = [":view_proto"],
+)

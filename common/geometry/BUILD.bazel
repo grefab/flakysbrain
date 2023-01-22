@@ -1,0 +1,39 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "CircleF.h",
+        "Clipper2Helper.cpp",
+        "Clipper2Helper.h",
+        "ClipperHelper.cpp",
+        "ClipperHelper.h",
+        "ContourF.cpp",
+        "ContourF.h",
+        "LineF.cpp",
+        "LineF.h",
+        "PointF.cpp",
+        "PointF.h",
+        "RectF.cpp",
+        "RectF.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/clipper",
+        "//3rdparty/clipper2",
+        "//3rdparty/fmt",
+        "//3rdparty/opencv/static:opencv",
+        "@com_github_ericniebler_range-v3//:range-v3",
+    ],
+)
+
+cc_test(
+    name = "test",
+    timeout = "short",
+    srcs = glob(["**/*_test.cpp"]),
+    linkstatic = True,
+    deps = [
+        ":lib",
+        "//3rdparty/catch:main",
+    ],
+)

@@ -1,0 +1,8 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+message Point2d {
+  double x = 1;
+  double y = 2;
+}

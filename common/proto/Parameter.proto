@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+message Parameter {
+  string internal_name = 1;
+  string description = 2;
+  string short_description = 3;
+  string color = 4;
+
+  message GoodValueRange {
+    double nominal = 1;
+    double positive_tolerance = 2;
+    double negative_tolerance = 3;
+    double positive_warning_limit = 4;
+    double negative_warning_limit = 5;
+  }
+  GoodValueRange good_value_range = 5;
+
+  message Measurement {
+    double value = 1;
+    string aggregation_method = 2;
+    repeated double single_values = 3;
+  }
+  Measurement measurement = 6;
+
+  bool within_tolerance = 7;
+  bool within_warning_limits = 8;
+  double pixel_per_unit = 9;
+  bool can_eject = 10;
+
+  message IsoNetz {
+    int32 flaschen_typ = 1;
+    int32 parameter_index = 2;
+  }
+  IsoNetz iso_netz = 11;
+}

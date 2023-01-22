@@ -7,6 +7,7 @@
 #include <future>
 #include <iostream>
 #include "common/imui/ImUi.h"
+#include "common/imui/graphics/graphics_window.h"
 
 gui::gui(brain* b) : brain_(b) {
   collect_thread_ = std::thread([this]() {
@@ -44,54 +45,27 @@ void gui::connect_to(std::string const& address) {}
 void gui::run() {
   spdlog::info("starting GUI");
   ImUi ui(1920, 1080, "flakysbrain");
+  view::View view;
   while (ui.active()) {
     ui.startFrame();
 
     // Display data
     std::lock_guard<std::mutex> lock(display_data_.mutex_);
 
-    ImGui::Begin("Yay Window");  // Pass a pointer to our bool variable (the
-                                 // window will have a closing button that will
-                                 // clear the bool when clicked)
+    ImGui::Begin("Yay Window");
     ImGui::Text("%s",
                 std::to_string(display_data_.last_executed_event_ts_).c_str());
-    if (ImGui::Button("Close Me")) {
-      close_thread_ = true;
-    }
-
-    ImDrawList* list = ImGui::GetWindowDrawList();
-
-    ImVec2 canvas_pos = ImGui::GetCursorScreenPos();  // ImDrawList API uses
-                                                      // screen coordinates!
-    ImVec2 lineP1 = {150.0f, 100.0f};
-    ImVec2 lineP2 = {150.0f, 300.0f};
-    static float thickness = 4.0f;
-    static float arrowWidth = 12.0f;
-    static float arrowHeight = 18.0f;
-    static float lineWidth = 4.0f;
-
-    list->AddCircleFilled({canvas_pos.x + lineP1.x - thickness,
-                           canvas_pos.y + lineP1.y + arrowHeight},
-                          50,
-                          IM_COL32(128, 128, 128, 255),
-                          120);
-
-    list->PathLineTo({canvas_pos.x + lineP1.x - thickness,
-                      canvas_pos.y + lineP1.y + arrowHeight});  // P1
-    list->PathLineTo({canvas_pos.x + lineP1.x - arrowWidth,
-                      canvas_pos.y + lineP1.y + arrowHeight});             // P2
-    list->PathLineTo({canvas_pos.x + lineP1.x, canvas_pos.y + lineP1.y});  // P3
-    list->PathLineTo({canvas_pos.x + lineP1.x + arrowWidth,
-                      canvas_pos.y + lineP1.y + arrowHeight});  // P4
-    list->PathLineTo({canvas_pos.x + lineP1.x + thickness,
-                      canvas_pos.y + lineP1.y + arrowHeight});  // P5
-    list->PathLineTo(
-      {canvas_pos.x + lineP2.x + thickness, canvas_pos.y + lineP2.y});  // P6
-    list->PathLineTo(
-      {canvas_pos.x + lineP2.x - thickness, canvas_pos.y + lineP2.y});  // P7
-    list->PathStroke(IM_COL32(128, 128, 128, 255), true, lineWidth);
 
     ImGui::End();
+
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32_BLACK);
+    ImGui::Begin("Graphics");
+    imui::graphicsUI(&view,
+                     [](ViewMapper const& view,
+                        ImDrawList* draw_list,
+                        ImVec2 const& mouse_content_pos) {});
+    ImGui::End();
+    ImGui::PopStyleColor();
 
     ui.finishFrame();
   }

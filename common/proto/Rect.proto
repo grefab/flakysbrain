@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+message Rect {
+  double x = 1;
+  double y = 2;
+  double w = 3;
+  double h = 4;
+}

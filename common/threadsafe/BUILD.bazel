@@ -1,0 +1,22 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "ReadWriteLocker.h",
+        "threadsafe.h",
+    ],
+    linkopts = ["-lpthread"],
+    visibility = ["//visibility:public"],
+    deps = [],
+)
+
+cc_test(
+    name = "test",
+    size = "small",
+    srcs = glob(["*_test.cpp"]),
+    deps = [
+        ":lib",
+        "//3rdparty/catch:main",
+    ],
+)

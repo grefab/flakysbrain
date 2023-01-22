@@ -1,0 +1,6 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+message Empty {
+}

@@ -14,5 +14,6 @@ cc_library(
         "//3rdparty/spdlog",
         "//brain/api:service",
         "//common/imui:lib",
+        "//common/imui/graphics:lib",
     ],
 )

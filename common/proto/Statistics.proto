@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+message Statistics {
+  double count = 1;
+  double min_value = 2;
+  double max_value = 3;
+  double mean = 4;
+  double standard_deviation = 5;
+  double cpk = 6;
+  double too_small_percentage = 7;
+  double too_big_percentage = 8;
+  double defects = 9;
+  double histogram_begin = 10;
+  double histogram_end = 11;
+  double histogram_width = 12;
+  message HistogramEntry {
+    double x = 1;
+    double y = 2;
+  }
+  repeated HistogramEntry entries = 13;
+}

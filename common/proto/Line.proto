@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = "isotronic/common/proto;common";
+package common;
+
+import "common/proto/Point.proto";
+
+message Line {
+  Point p1 = 1;
+  Point p2 = 2;
+}

@@ -1,0 +1,27 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "from_proto",
+    srcs = [
+        "FromProto.cpp",
+        "FromProto.h",
+    ],
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:protobuf",
+    ],
+)
+
+cc_library(
+    name = "to_proto",
+    srcs = [
+        "ToProto.cpp",
+        "ToProto.h",
+    ],
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:protobuf",
+    ],
+)

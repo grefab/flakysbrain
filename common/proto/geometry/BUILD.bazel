@@ -1,0 +1,16 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "Geometry.cpp",
+        "Geometry.h",
+    ],
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//common/geometry:lib",
+        "//common/proto:common_cc_proto",
+        "@com_github_ericniebler_range-v3//:range-v3",
+    ],
+)

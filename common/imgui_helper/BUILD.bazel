@@ -1,0 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "imgui_helper.cpp",
+        "imgui_helper.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/imgui-docking",
+        "//common/geometry:lib",
+        "//common/proto/geometry:lib",
+    ],
+)
