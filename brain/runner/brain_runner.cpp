@@ -8,8 +8,8 @@
 
 brain_runner::~brain_runner() {
     std::cout << "Closing runner" << std::endl;
-    //    server_.kill();
-    //    server_.wait();
+    server_.kill();
+    server_.wait();
     brain_.kill();
     if (run_thread_.joinable()) {
         run_thread_.join();

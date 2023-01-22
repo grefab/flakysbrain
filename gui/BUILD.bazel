@@ -6,15 +6,12 @@ cc_library(
         [
             "*.h",
             "*.cpp",
-            "GL/*.c",
-            "GL/*.h",
         ],
         exclude = ["**/*_test.*"],
     ),
     includes = ["."],
     deps = [
-        "//3rdparty/imgui-docking",
         "//brain/api:service",
-        "@sdl2",
+        "//common/imui:lib",
     ],
 )

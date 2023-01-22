@@ -2,19 +2,24 @@ package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "brain",
-    srcs = glob(
-        [
-            "**/*.h",
-            "**/*.cpp",
-        ],
-        exclude = ["**/*_test.*"],
-    ),
+    srcs = [
+        "brain.cpp",
+        "brain.h",
+        "event.cpp",
+        "event.h",
+        "neuron.cpp",
+        "neuron.h",
+        "performance_measure.cpp",
+        "performance_measure.h",
+        "types.h",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
     name = "test",
     timeout = "short",
-    srcs = glob(["**/*_test.cpp"]),
+    srcs = ["brain_test.cpp"],
     deps = [
         ":brain",
         "//3rdparty/catch:main",

@@ -1,0 +1,27 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "icons",
+    srcs = [
+        "IconsMaterialDesign.h",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "setup",
+    srcs = [
+        "fonts.cpp",
+        "fonts.h",
+    ],
+    data = [
+        "MaterialIcons-Regular.ttf",
+        "Roboto-Regular.ttf",
+        "SourceSansPro-Regular.ttf",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":icons",
+        "//3rdparty/imgui-docking",
+    ],
+)

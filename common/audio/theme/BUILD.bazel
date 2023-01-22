@@ -1,0 +1,19 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "theme.h",
+    ],
+    data = [
+        "goodbye.wav",
+        "hello.wav",
+        "notification.wav",
+        "task_failed.wav",
+        "task_succeeded.wav",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//common/audio:lib",
+    ],
+)

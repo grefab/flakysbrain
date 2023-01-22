@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "brain/runner/brain_runner.h"
 #include "gui/gui.h"
 
@@ -8,9 +9,8 @@ int main() {
         brain_runner runner;
         runner.run();
         gui g(&runner.brain_);
-
         std::cout << "Waiting for user to close GUI..." << std::endl;
-        g.wait();
+        g.run();  // blocks
     }
     std::cout << "Brain is dead." << std::endl;
 

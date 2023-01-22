@@ -7,7 +7,7 @@
 #include <atomic>
 #include <thread>
 
-#include "brain/api/api.grpc.pb.h"
+#include "brain/api/proto/api.grpc.pb.h"
 #include "brain/brain.h"
 
 class gui {
@@ -16,7 +16,7 @@ public:
     virtual ~gui();
 
     void connect_to(std::string const& address);
-    void wait();
+    void run();
 
     struct DisplayData {
         timestamp monotonic_now_ = 0;
@@ -27,7 +27,6 @@ public:
 private:
     brain* brain_;
 
-    std::thread gui_thread_;
     std::thread collect_thread_;
     std::atomic_bool close_thread_{false};
 };

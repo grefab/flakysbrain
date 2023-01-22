@@ -1,0 +1,14 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_library(
+    name = "lib",
+    srcs = [
+        "audio.cpp",
+        "audio.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/spdlog",
+        "@sdl2",
+    ],
+)

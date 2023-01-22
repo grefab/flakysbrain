@@ -2,12 +2,11 @@ package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "runner",
-    srcs = glob(
-        [
-            "**/*.h",
-            "**/*.cpp",
-        ],
-    ),
+    srcs = [
+        "brain_runner.cpp",
+        "brain_runner.h",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         "//brain",
         "//brain/api:service",
