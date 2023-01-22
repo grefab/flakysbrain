@@ -19,7 +19,7 @@ public:
     void run();
 
     struct DisplayData {
-        timestamp monotonic_now_ = 0;
+        timestamp last_executed_event_ts_ = 0;
 
         std::mutex mutex_;
     } display_data_;

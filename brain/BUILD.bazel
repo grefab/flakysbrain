@@ -14,7 +14,9 @@ cc_library(
         "types.h",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//3rdparty/spdlog"],
+    deps = [
+        "//3rdparty/spdlog",
+    ],
 )
 
 cc_test(

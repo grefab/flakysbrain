@@ -1,18 +1,19 @@
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "brain/runner/brain_runner.h"
 #include "gui/gui.h"
 
 int main() {
-    std::cout << "Running brain." << std::endl;
+    spdlog::info("running brain");
     {
         brain_runner runner;
         runner.run();
         gui g(&runner.brain_);
-        std::cout << "Waiting for user to close GUI..." << std::endl;
+        spdlog::info("waiting for user to close GUI...");
         g.run();  // blocks
+        spdlog::info("waiting for runner to finish...");
     }
-    std::cout << "Brain is dead." << std::endl;
+    spdlog::info("done.");
 
     return 0;
 }

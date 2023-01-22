@@ -4,8 +4,6 @@
 #include <grpc++/server_builder.h>
 #include <spdlog/spdlog.h>
 
-#include <iostream>
-
 void Server::run(Service* service) {
     grpc::ServerBuilder builder;
     builder.AddListeningPort(address_, grpc::InsecureServerCredentials());
@@ -20,5 +18,4 @@ void Server::kill() {
 
 void Server::wait() {
     server_->Wait();
-    spdlog::info("Server closed: {}", address_);
 }

@@ -6,19 +6,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <iostream>
-
-brain_runner::~brain_runner() {
-    spdlog::info("Closing runner");
-    server_.kill();
-    server_.wait();
-    brain_.kill();
-    if (run_thread_.joinable()) {
-        run_thread_.join();
-    }
-    spdlog::info("Runner closed");
-}
-
 brain_runner::brain_runner() {
     // Sensors
     auto eye = brain_.add_neuron(std::make_shared<neuron>(1, 0.5));
@@ -40,13 +27,25 @@ brain_runner::brain_runner() {
     };
 
     // Initial event
-    brain_.add_event(
-        std::make_shared<periodic_event>(0, 100, [eye](brain* b, timestamp now) { eye->apply_pulse(1, now, b); }));
+    brain_.add_event(std::make_shared<periodic_event>(0, 100, [eye](brain* b, timestamp now) {
+        eye->apply_pulse(1, now, b);
+        return true;
+    }));
+}
+
+brain_runner::~brain_runner() {
+    spdlog::info("closing brain_runner");
+    server_.kill();
+    server_.wait();
+    brain_.kill();
+    if (run_thread_.joinable()) {
+        run_thread_.join();
+    }
+    spdlog::info("brain_runner closed");
 }
 
 void brain_runner::run() {
-    spdlog::info("Starting runner");
+    spdlog::info("starting brain_runner");
     run_thread_ = std::thread([this]() { brain_.run(); });
-
     server_.run(&service_);
 }

@@ -4,11 +4,9 @@
 #include "brain/types.h"
 
 struct event {
-    explicit event(timestamp when);
+    explicit event(timestamp when) : when_(when){};
     virtual ~event() = default;
-
     virtual void action(brain* b, timestamp now) = 0;
-
     timestamp when_;
 };
 
@@ -18,7 +16,6 @@ struct neuronal_event : public event {
     neuronal_event(timestamp when, neuron_ptr target, pulse pulse)
         : event(when), target_(std::move(target)), pulse_(pulse) {}
     ~neuronal_event() override = default;
-
     void action(brain* b, timestamp now) override;
 
 private:
@@ -26,13 +23,15 @@ private:
     pulse pulse_;
 };
 
-struct periodic_event : public event {
-    periodic_event(timestamp when, duration period, std::function<void(brain* b, timestamp now)> f);
-    ~periodic_event() override = default;
+//
 
+struct periodic_event : public event {
+    // f returns if periodic event pushing should continue
+    periodic_event(timestamp when, duration period, std::function<bool(brain* b, timestamp now)> f);
+    ~periodic_event() override = default;
     void action(brain* b, timestamp now) override;
 
 private:
     duration period_;
-    std::function<void(brain* b, timestamp now)> f_;
+    std::function<bool(brain* b, timestamp now)> f_;
 };

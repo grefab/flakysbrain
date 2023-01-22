@@ -2,8 +2,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <iostream>
-
 void performance_measure::operator()() {
     if (++counter_ >= batch_size_) {
         // Time calculations

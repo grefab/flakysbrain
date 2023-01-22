@@ -1,8 +1,19 @@
 #include "brain/brain.h"
 
+#include <spdlog/spdlog.h>
+
 void brain::run(bool with_maintenance) {
     if (with_maintenance) {
-        add_event(std::make_shared<periodic_event>(100, 100, [](brain* b, timestamp now) { b->maintenance(now); }));
+        add_event(std::make_shared<periodic_event>(100, 100, [](brain* b, timestamp now) {
+            b->maintenance(now);
+            if (b->events_in_queue() == 0) {
+                // no need to maintenance if there are no more other events.
+                // this happens when closing the brain
+                spdlog::info("empty brain. stopping maintenance");
+                return false;
+            }
+            return true;
+        }));
     }
 
     while (!events_.empty()) {
@@ -10,6 +21,7 @@ void brain::run(bool with_maintenance) {
         events_.pop();
 
         timestamp now = e->when_;
+        last_executed_event_ts_ = now;
         e->action(this, now);
 
         perf_();
@@ -19,6 +31,7 @@ void brain::run(bool with_maintenance) {
 void brain::kill() {
     // Clear event queue soon.
     add_maintenance_action([](brain* b, timestamp now) {
+        spdlog::info("deleting brain's {} events", b->events_in_queue());
         while (!b->events_.empty()) {
             b->events_.pop();
         }
@@ -93,4 +106,5 @@ void brain::maintenance(timestamp now) {
         events_.pop();
     }
     events_ = new_events;
+    last_executed_event_ts_ = 0;
 }
