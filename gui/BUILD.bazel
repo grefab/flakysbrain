@@ -15,6 +15,7 @@ cc_library(
         "//brain/api:service",
         "//common/imui:lib",
         "//common/imui/graphics:lib",
+        "//common/proto/json:lib",
         "//common/threadsafe:lib",
     ],
 )

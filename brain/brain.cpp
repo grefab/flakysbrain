@@ -4,7 +4,7 @@
 void brain::run(bool with_maintenance) {
   if (with_maintenance) {
     add_event(
-      std::make_shared<periodic_event>(100, 100, [](brain* b, timestamp now) {
+      std::make_shared<periodic_event>(100, 1000, [](brain* b, timestamp now) {
         b->maintenance(now);
         if (b->events_in_queue() == 0) {
           // no need to maintenance if there are no more other events.

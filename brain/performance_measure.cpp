@@ -10,11 +10,13 @@ void performance_measure::operator()() {
                       .count();
     auto events_per_second = duration > 0 ? counter_ * 1000 / duration : 0;
 
-    // Log output
-    spdlog::info("executed {} events in {}ms, {}e/s",
-                 counter_,
-                 duration,
-                 events_per_second);
+    if (duration > 250) {
+      // Log output
+      spdlog::info("executed {} events in {}ms, {}e/s",
+                   counter_,
+                   duration,
+                   events_per_second);
+    }
 
     // Make sure we do not log too frequently.
     if (duration < 1000) {

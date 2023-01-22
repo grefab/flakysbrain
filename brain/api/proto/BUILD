@@ -6,6 +6,7 @@ proto_library(
     srcs = ["api.proto"],
     visibility = ["//visibility:public"],
     deps = [
+        "//common/proto:common_proto",
         "@com_google_protobuf//:empty_proto",
     ],
 )

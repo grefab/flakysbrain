@@ -3,6 +3,7 @@ syntax = "proto3";
 package brain_api;
 
 import "google/protobuf/empty.proto";
+import "common/proto/Point.proto";
 
 service Api {
     rpc getSnapshot (google.protobuf.Empty) returns (Snapshot);
@@ -19,6 +20,7 @@ message Neuron {
     double power = 3;
     double bias = 4;
     double potential = 5;
+    common.Point pos = 6;
 }
 
 message Connection {

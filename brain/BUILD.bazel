@@ -19,6 +19,8 @@ cc_library(
     deps = [
         "//3rdparty/spdlog",
         "//brain/api/proto:api_cc_proto",
+        "//common/geometry:lib",
+        "//common/proto/geometry:lib",
     ],
 )
 

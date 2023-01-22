@@ -3,6 +3,7 @@
 //
 
 #include "brain_mass.h"
+#include "common/proto/geometry/Geometry.h"
 
 neuron_ptr brain_mass::add_neuron(neuron_ptr n) {
   neurons_.insert(n);
@@ -46,6 +47,7 @@ brain_api::Snapshot brain_mass::makeSnapshot() const {
     n.set_power(neuron->power);
     n.set_bias(neuron->bias);
     n.set_potential(neuron->potential_);
+    *n.mutable_pos() = asPoint(neuron->pos);
     for (auto const& connection : neuron->connections) {
       brain_api::Connection c;
       c.set_to_id(connection->target->id);

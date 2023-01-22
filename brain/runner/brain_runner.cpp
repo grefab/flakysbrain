@@ -9,21 +9,25 @@ brain_runner::brain_runner()
     : brain_mass_(std::make_shared<brain_mass>()), brain_(brain_mass_) {
   // Sensors
   auto eye = brain_mass_->add_neuron(std::make_shared<neuron>(1, 0.5));
+  eye->pos = PointF(100, 100);
 
   // Grey matter
-  auto n = brain_mass_->add_neuron(std::make_shared<neuron>(1, 0.5));
+  auto n = brain_mass_->add_neuron(std::make_shared<neuron>(0.1, 0.5));
+  n->pos = PointF(200, 100);
   brain_mass_->add_connection(eye, std::make_shared<connection>(n, 1, 1));
   for (int i = 0; i < 10; ++i) {
-    auto n2 = brain_mass_->add_neuron(std::make_shared<neuron>(1, 0.5));
+    auto n2 = brain_mass_->add_neuron(std::make_shared<neuron>(0.1, 0.5));
+    n2->pos = PointF(200 + 100 * i, 100);
     brain_mass_->add_connection(n, std::make_shared<connection>(n2, 1, 1));
     n = n2;
   }
 
   // Actuators
   auto motor = brain_mass_->add_neuron(std::make_shared<neuron>(1, 0.5));
+  motor->pos = PointF(1200 + 100, 100);
   brain_mass_->add_connection(n, std::make_shared<connection>(motor, 1, 1));
   motor->on_fire_ = [](timestamp now, pulse power) {
-    /// std::cout << now << "motor activated: " << power << std::endl;
+    spdlog::info("motor activated: {}", power);
   };
 
   // Initial event

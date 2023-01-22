@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <utility>
 #include "brain/types.h"
+#include "common/geometry/PointF.h"
 
 class brain;
 struct connection;
@@ -38,6 +39,9 @@ struct neuron {
   std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp,
                                                                 pulse) {};
 
+  // Display stuff
+  PointF pos = PointF(0, 0);
+
   private:
   // Fires a pulse along the connections.
   void fire(timestamp now, brain* b);
@@ -57,8 +61,6 @@ struct neuron {
   timestamp last_pulse_received_timestamp_ =
     std::numeric_limits<timestamp>::max();
   timestamp last_fired_timestamp_ = std::numeric_limits<timestamp>::max();
-
-  // Display stuff
 };
 
 using neuron_ptr = std::shared_ptr<neuron>;
