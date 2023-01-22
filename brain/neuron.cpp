@@ -33,12 +33,12 @@ void neuron::fire(timestamp now, brain* b) {
   last_fired_timestamp_ = now;
 }
 
-double neuron::decayed(duration time_passed, double last_potential) const {
+double neuron::decayed(duration time_passed, double last_potential) {
   // TODO(grefab): implement
   return last_potential;
 }
 
-double neuron::cooled_down(duration time_passed, pulse p) const {
+double neuron::cooled_down(duration time_passed, pulse p) {
   // TODO(grefab): implement
   return p;
 }
