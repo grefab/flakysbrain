@@ -5,12 +5,17 @@
 #include <mutex>
 #include <queue>
 #include <unordered_set>
+#include <utility>
+#include "brain/brain_mass.h"
 #include "brain/event.h"
 #include "brain/neuron.h"
 #include "brain/performance_measure.h"
 
 class brain {
   public:
+  explicit brain(brain_mass_ptr brain_mass)
+      : brain_mass_(std::move(brain_mass)) {}
+
   // Runs until no events are in the queue anymore.
   void run(bool with_maintenance = true);
 
@@ -20,15 +25,7 @@ class brain {
   // Is called by neuron. Adds an event to the event queue.
   void add_event(event_ptr e);
 
-  // Fiddle with neurons.
-  neuron_ptr add_neuron(neuron_ptr n);
-  void remove_neuron(neuron_ptr n);
-
-  void add_connection(neuron_ptr n, connection_ptr c);
-  void remove_connection(neuron_ptr n, connection_ptr c);
-
   // Monitoring methods
-  std::unordered_set<neuron_ptr> const& neurons() { return neurons_; }
   [[nodiscard]] size_t events_in_queue() const { return events_.size(); }
   [[nodiscard]] timestamp last_executed_event_ts() const {
     return last_executed_event_ts_;
@@ -39,12 +36,11 @@ class brain {
     std::function<void(brain* b, timestamp now)> maintenance_action);
 
   private:
+  brain_mass_ptr brain_mass_;
+
   // "Normalizies" brain, i.e. makes sure that there origin of time for all
   // thing concerned with time (neurons, events) is now.
   void maintenance(timestamp now);
-
-  // Contains all neurons in this brain. Mainly used for bookkeeping.
-  std::unordered_set<neuron_ptr> neurons_;
 
   // A priority queue that places small timestamps first. Therefore, we can
   // easily access the next event that shall happen.

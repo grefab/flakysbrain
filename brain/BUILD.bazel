@@ -5,6 +5,8 @@ cc_library(
     srcs = [
         "brain.cpp",
         "brain.h",
+        "brain_mass.cpp",
+        "brain_mass.h",
         "event.cpp",
         "event.h",
         "neuron.cpp",

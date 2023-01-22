@@ -5,7 +5,6 @@
 #include "gui/gui.h"
 #include <spdlog/spdlog.h>
 #include <future>
-#include <iostream>
 #include "common/imui/ImUi.h"
 #include "common/imui/graphics/graphics_window.h"
 

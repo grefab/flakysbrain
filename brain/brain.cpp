@@ -42,39 +42,6 @@ void brain::add_event(event_ptr e) {
   events_.push(e);
 }
 
-neuron_ptr brain::add_neuron(neuron_ptr n) {
-  neurons_.insert(n);
-  return n;
-}
-
-void brain::remove_neuron(neuron_ptr n) {
-  // Remove all connections from this neuron, so that if it is still part of
-  // the event queue, it does not fire anywhere upon event execution.
-  n->connections_.clear();
-
-  neurons_.erase(n);
-
-  // Remove all connections to the to-be-deleted neuron.
-  for (auto& neuron : neurons_) {
-    for (auto c_it = neuron->connections_.begin();
-         c_it != neuron->connections_.end();) {
-      if ((*c_it)->target_ == n) {
-        neuron->connections_.erase(c_it++);
-      } else {
-        ++c_it;
-      }
-    }
-  }
-}
-
-void brain::add_connection(neuron_ptr n, connection_ptr c) {
-  n->connections_.insert(c);
-}
-
-void brain::remove_connection(neuron_ptr n, connection_ptr c) {
-  n->connections_.erase(c);
-}
-
 void brain::add_maintenance_action(
   std::function<void(brain* b, timestamp now)> maintenance_action) {
   std::lock_guard<std::recursive_mutex> lock(m_);
@@ -95,7 +62,7 @@ void brain::maintenance(timestamp now) {
   }
 
   // Reset timestamps of all our neurons.
-  for (auto& neuron : neurons_) {
+  for (auto& neuron : brain_mass_->neurons_) {
     neuron->last_pulse_received_timestamp_ -= now;
     neuron->last_fired_timestamp_ -= now;
   }
