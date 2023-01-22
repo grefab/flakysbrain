@@ -78,7 +78,9 @@ static void* get_proc(const char* proc) {
 }
 #endif
 
-static struct { int major, minor; } version;
+static struct {
+    int major, minor;
+} version;
 
 static int parse_version(void) {
     if (!glGetIntegerv)

@@ -6,6 +6,7 @@
 
 #include <atomic>
 #include <thread>
+
 #include "brain/api/api.grpc.pb.h"
 #include "brain/brain.h"
 
@@ -14,7 +15,7 @@ public:
     explicit gui(brain* b);
     virtual ~gui();
 
-    void connect_to(std::string address);
+    void connect_to(std::string const& address);
     void wait();
 
     struct DisplayData {

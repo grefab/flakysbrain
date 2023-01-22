@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_set>
 #include <utility>
+
 #include "brain/types.h"
 
 class brain;

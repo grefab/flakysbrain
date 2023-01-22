@@ -3,6 +3,7 @@
 //
 
 #include "brain/neuron.h"
+
 #include "brain/brain.h"
 
 void neuron::apply_pulse(pulse p, timestamp now, brain* b) {

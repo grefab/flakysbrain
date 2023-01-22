@@ -3,6 +3,7 @@
 //
 
 #include "brain/runner/brain_runner.h"
+
 #include <iostream>
 
 brain_runner::~brain_runner() {

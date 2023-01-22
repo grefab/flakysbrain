@@ -1,4 +1,5 @@
 #include "brain/api/Service.h"
+
 #include <future>
 
 grpc::Status Service::get_snapshot(grpc::ServerContext* context, const brain_api::SnapshotRequest* request, brain_api::Snapshot* response) {

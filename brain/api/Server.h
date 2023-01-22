@@ -1,7 +1,9 @@
 #pragma once
 
 #include <grpc++/server.h>
+
 #include <memory>
+
 #include "brain/api/Service.h"
 
 class Server {

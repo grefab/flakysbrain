@@ -3,6 +3,7 @@
 //
 
 #include "brain/brain.h"
+
 #include "3rdparty/catch/catch.hpp"
 
 TEST_CASE("brain modifications", "[brain]") {
@@ -12,7 +13,9 @@ TEST_CASE("brain modifications", "[brain]") {
         auto n1 = b.add_neuron(std::make_shared<neuron>(1, 0.5));
         REQUIRE(b.neurons().size() == 1);
 
-        SECTION("new neurons have no connections") { REQUIRE(n1->connections_.size() == 0); }
+        SECTION("new neurons have no connections") {
+            REQUIRE(n1->connections_.size() == 0);
+        }
 
         SECTION("neurons can be deleted") {
             b.remove_neuron(n1);

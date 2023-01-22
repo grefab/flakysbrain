@@ -1,6 +1,8 @@
 #include "brain/api/Server.h"
+
 #include <grpc++/security/server_credentials.h>
 #include <grpc++/server_builder.h>
+
 #include <iostream>
 
 void Server::run(Service* service) {

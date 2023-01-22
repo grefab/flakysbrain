@@ -1,4 +1,5 @@
 #include "brain/event.h"
+
 #include "brain/brain.h"
 
 event::event(timestamp when) : when_(when) {}
