@@ -8,14 +8,14 @@
 #include "imgui_impl_glfw.h"
 
 class ImUi {
-public:
-    ImUi(int width, int height, std::string const& title);
-    virtual ~ImUi();
+  public:
+  ImUi(int width, int height, std::string const& title);
+  virtual ~ImUi();
 
-    bool active();
-    void startFrame();
-    void finishFrame();
+  bool active();
+  void startFrame();
+  void finishFrame();
 
-private:
-    GLFWwindow* window_ = nullptr;
+  private:
+  GLFWwindow* window_ = nullptr;
 };

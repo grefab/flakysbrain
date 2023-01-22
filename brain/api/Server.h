@@ -1,21 +1,19 @@
 #pragma once
 
 #include <grpc++/server.h>
-
 #include <memory>
-
 #include "brain/api/Service.h"
 
 class Server {
-public:
-    explicit Server(std::string address_) : address_(std::move(address_)) {}
+  public:
+  explicit Server(std::string address_) : address_(std::move(address_)) {}
 
-public:
-    void run(Service* service);
-    void kill();
-    void wait();
+  public:
+  void run(Service* service);
+  void kill();
+  void wait();
 
-private:
-    std::string address_;
-    std::unique_ptr<grpc::Server> server_;
+  private:
+  std::string address_;
+  std::unique_ptr<grpc::Server> server_;
 };
