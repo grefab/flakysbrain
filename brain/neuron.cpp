@@ -12,7 +12,7 @@ void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
   // Apply what's left of our pulse after a potential cool down phase after
   // firing.
   potential_ += cooled_down(now - last_fired_timestamp_, p);
-  if (potential_ > bias_) {
+  if (potential_ > bias) {
     fire(now, b);
     potential_ = 0;
   }
@@ -21,13 +21,13 @@ void neuron::apply_pulse(pulse p, timestamp now, brain* b) {
 }
 
 void neuron::fire(timestamp now, brain* b) {
-  on_fire_(now, power_);
+  on_fire_(now, power);
 
   // Add events in the future for all our connections.
-  for (auto const& c : connections_) {
+  for (auto const& c : connections) {
     b->add_event(std::make_shared<neuronal_event>(now + c->distance_,
                                                   c->target_,
-                                                  power_ * c->weight_));
+                                                  power * c->weight_));
   }
 
   last_fired_timestamp_ = now;

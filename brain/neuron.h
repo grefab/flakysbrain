@@ -15,22 +15,22 @@ struct neuron {
   friend class brain;
 
   // Constructor
-  neuron(pulse power, double bias) : power_(power), bias_(bias) {}
+  neuron(pulse power, double bias) : power(power), bias(bias) {}
 
   // Is called by brain when an event reaches this neuron.
   void apply_pulse(pulse p, timestamp now, brain* b);
 
   /* The following parameters shall be modified during learning. */
   // Amount of firing power in [0, 1]
-  pulse power_;
+  pulse power;
   // If potential exceeds bias, we fire. In (0, inf)
-  double bias_;
+  double bias;
   // Where and when to fire
-  std::unordered_set<connection_ptr> connections_;
+  std::unordered_set<connection_ptr> connections;
 
   // Monitoring
-  std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp now,
-                                                                pulse power) {};
+  std::function<void(timestamp now, pulse power)> on_fire_ = [](timestamp,
+                                                                pulse) {};
 
   private:
   // Fires a pulse along the connections.

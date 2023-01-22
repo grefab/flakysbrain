@@ -45,7 +45,7 @@ void brain::add_event(event_ptr e) {
 void brain::add_maintenance_action(
   std::function<void(brain* b, timestamp now)> maintenance_action) {
   std::lock_guard<std::recursive_mutex> lock(m_);
-  maintenance_actions_.emplace_back(maintenance_action);
+  maintenance_actions_.emplace_back(std::move(maintenance_action));
 }
 
 /// Make sure that timestamps do not get out of hand, i.e. reach numeric limits.
