@@ -75,15 +75,14 @@ void gui::run() {
         }
       }
       for (auto const& neuron : dd.neurons()) {
-        uint8_t brightness = std::round(neuron.potential() * 255.0);
+        uint8_t brightness = neuron.potential() * 255.0;
         uint32_t color =
           0xff000000 | brightness << 16 | brightness << 8 | brightness;
 
-        draw_list->AddCircle(view.toScreen(asImVec2(neuron.pos())),
-                             view.lengthToScreen(10),
-                             color,
-                             36,
-                             2);
+        draw_list->AddCircleFilled(view.toScreen(asImVec2(neuron.pos())),
+                                   view.lengthToScreen(10),
+                                   color,
+                                   36);
       }
     };
     imui::graphicsUI(&view, drawFn);
